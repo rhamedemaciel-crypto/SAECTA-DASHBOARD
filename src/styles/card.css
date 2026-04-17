@@ -1,0 +1,97 @@
+.saecta-card {
+  position: relative;
+  border-radius: 16px !important;
+  overflow: visible !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border: 2px solid #D2D9E5 !important; 
+  background: #FFF;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-gradient-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(180deg, #E2E8F0 0%, rgba(255, 255, 255, 0) 100%);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  z-index: 0;
+}
+
+.card-floating-avatar {
+  position: absolute;
+  top: -40px; left: 24px;
+  width: 80px; height: 80px;
+  background: #FFF;
+  border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 2;
+}
+
+.card-floating-avatar img {
+  width: 50px; height: 50px; object-fit: contain;
+}
+
+.card-options-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10 !important; /* Força o botão a ficar na frente de ABSOLUTAMENTE TUDO */
+  font-size: 24px;
+  cursor: pointer;
+  color: #A0AABF;
+  padding: 8px; /* Aumenta a "área de contato" invisível do clique */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Feedback visual para você saber que o botão é clicável */
+.card-options-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #122A4C;
+}
+
+/* Garante que o modo escuro acompanhe o botão */
+.dark-theme .card-options-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.card-content {
+  position: relative; z-index: 2;
+  padding: 60px 24px 24px 24px;
+}
+
+.card-title {
+  color: #122A4C; font-size: 20px; font-weight: 700;
+  margin-top: 56px; margin-bottom: 12px;
+}
+
+.card-address {
+  color: #8D99AE; font-size: 12px;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 24px;
+}
+
+.card-metadata {
+  display: flex; justify-content: space-between;
+  border-top: 1px solid #F0F2F5; padding-top: 16px;
+}
+
+.meta-column {
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.meta-label {
+  color: #8D99AE; font-size: 10px; font-weight: 600; text-transform: uppercase;
+}
+
+.meta-value {
+  color: #3A4040; font-size: 12px; font-weight: 700;
+}

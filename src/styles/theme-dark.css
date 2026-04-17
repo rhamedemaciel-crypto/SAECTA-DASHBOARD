@@ -1,0 +1,31 @@
+body, .admin-header, .admin-content, .saecta-card, .header-action-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme { background-color: #141414 !important; }
+.dark-theme .admin-content { background-color: #141414 !important; }
+.dark-theme .admin-header { background-color: #1F1F1F !important; box-shadow: 0 1px 4px rgba(0,0,0,0.5) !important; }
+.dark-theme .header-logo { filter: brightness(0) invert(1); }
+.dark-theme .header-action-btn { background: radial-gradient(circle at center, #2A2A2A 0%, #1F1F1F 100%) !important; border-color: #333333 !important; }
+.dark-theme .header-icon { color: #A0AABF !important; }
+.dark-theme .header-action-btn:hover { background: #333333 !important; }
+
+.dark-theme .saecta-card { background: #1F1F1F !important; border-color: #333333 !important; }
+.dark-theme .card-gradient-bg { background: linear-gradient(180deg, #2A2A2A 0%, rgba(31, 31, 31, 0) 100%) !important; }
+.dark-theme .card-floating-avatar { background: #1F1F1F !important; }
+.dark-theme .card-title, .dark-theme .meta-value { color: #E2E8F0 !important; }
+
+.dark-theme .ant-pagination-item, .dark-theme .ant-pagination-prev .ant-pagination-item-link, .dark-theme .ant-pagination-next .ant-pagination-item-link {
+  background: radial-gradient(circle at center, #2A2A2A 0%, #1F1F1F 100%) !important; border-color: #333333 !important;
+}
+.dark-theme .ant-pagination-item a, .dark-theme .ant-pagination-item-link { color: #A0AABF !important; }
+.dark-theme .ant-pagination-item-active { background: #3B82F6 !important; border-color: #3B82F6 !important; }
+.dark-theme .ant-pagination-item-active a { color: #FFFFFF !important; }
+
+.dark-theme .page-title, .dark-theme .form-section-title { color: #E2E8F0 !important; }
+.dark-theme .form-section-title::before { border-color: #E2E8F0 !important; }
+.dark-theme .form-section-card { background: #1F1F1F !important; border-color: #333333 !important; }
+.dark-theme .custom-input, .dark-theme .custom-select .ant-select-selector { background-color: #2A2A2A !important; border-color: #404040 !important; color: #E2E8F0 !important; }
+.dark-theme .custom-input::placeholder, .dark-theme .custom-select .ant-select-selection-placeholder { color: #8D99AE !important; }
+.dark-theme .input-icon { color: #6B7280 !important; }
+.dark-theme .avatar-edit-badge { background-color: #2A2A2A !important; border-color: #404040 !important; }

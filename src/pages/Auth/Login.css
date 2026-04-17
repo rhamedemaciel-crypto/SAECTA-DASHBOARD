@@ -1,0 +1,173 @@
+.login-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  /* Degradê exato baseado nas cores do Figma */
+  background: linear-gradient(180deg, #EBEBEB 0%, #193051 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 800px;
+}
+
+/* --- COLUNA ESQUERDA --- */
+.login-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-left-content {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+.logo-container {
+  margin-bottom: 40px;
+}
+
+.saecta-logo {
+  max-width: 250px;
+  height: auto;
+}
+
+/* --- CARROSSEL SEM FUNDO --- */
+.carousel-wrapper {
+  width: 100%;
+  margin-bottom: 24px;
+  /* Removidos o fundo branco, a sombra e as bordas */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ant-carousel .slick-slide {
+  background: transparent !important; /* Força o Ant Design a não colocar fundo */
+}
+
+.carousel-image {
+  width: 100%;
+  height: 350px; 
+  object-fit: contain;
+  /* Removido o background-color: #c4e0c1; */
+  background: transparent !important;
+}
+
+.carousel-text {
+  color: #EFEFEF;
+  font-size: 14px;
+  margin-bottom: 50px;
+}
+
+.partners-box {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- COLUNA DIREITA --- */
+.login-right-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.client-logo-container {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* --- CUSTOMIZAÇÃO DOS INPUTS DE LOGIN --- */
+.login-input {
+  /* Fundo escuro com leve transparência igual ao Figma */
+  background-color: rgba(30, 35, 45, 0.8) !important; 
+  border: none !important;
+  border-radius: 8px !important;
+  height: 48px !important;
+}
+
+/* Garante que a caixa de texto interna fique transparente e o texto branco */
+.login-input input,
+.login-input .ant-input {
+  background-color: transparent !important; 
+  color: #FFFFFF !important; /* TEXTO BRANCO PARA APARECER! */
+}
+
+/* Cor do placeholder (o texto "Digite sua senha") */
+.login-input input::placeholder {
+  color: #8D99AE !important;
+}
+
+/* Cor dos ícones (Cadeado, Usuário e o Olhinho da senha) */
+.login-input .ant-input-prefix .anticon,
+.login-input .ant-input-suffix .anticon {
+  color: #8D99AE !important;
+}
+
+/* Efeito de foco suave quando clica no input */
+.login-input:focus-within {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Rodapé Form */
+.login-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-icon-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-text {
+  color: #EFEFEF;
+  font-size: 12px;
+}
+
+.footer-icon {
+  color: #EFEFEF;
+  font-size: 20px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.footer-icon:hover {
+  opacity: 0.7;
+}
+
+/* --- CUSTOMIZAÇÃO DOS PONTINHOS (DOTS) DO CARROSSEL --- */
+.ant-carousel .slick-dots li button {
+  background: #193051 !important;
+  opacity: 0.3; 
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background: #193051 !important;
+  opacity: 1; 
+  width: 24px !important; 
+}
+
+.ant-carousel .slick-dots-bottom {
+  bottom: -3px;
+}
