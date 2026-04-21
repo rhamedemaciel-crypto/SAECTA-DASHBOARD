@@ -1,0 +1,29 @@
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.06);
+  height: 100%;
+}
+
+.header {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #1e3a5f !important;
+  letter-spacing: 0.3px;
+  margin: 0 !important;
+}
+
+.subtitle {
+  font-size: 12px !important;
+  color: #8c9bb5 !important;
+  margin-top: 4px;
+  display: block;
+}
+
+.chartWrapper {
+  margin-top: 8px;
+}
