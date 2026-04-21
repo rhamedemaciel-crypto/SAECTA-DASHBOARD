@@ -1,0 +1,48 @@
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.06);
+  height: 100%;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #1e3a5f !important;
+  letter-spacing: 0.3px;
+  margin: 0 !important;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subjectName {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #1e3a5f !important;
+}
+
+.score {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #1e3a5f !important;
+}
