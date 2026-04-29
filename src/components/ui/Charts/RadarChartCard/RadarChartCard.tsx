@@ -6,7 +6,18 @@ import styles from "../ChartCard.module.css";
 
 const { Title, Text } = Typography;
 
-export default function RadarChartCard() {
+// NOVO: Interface para receber dados dinâmicos
+interface RadarProps {
+  data?: {
+    series: { name: string; data: number[] }[];
+    categories: string[];
+  };
+}
+
+export default function RadarChartCard({ data }: RadarProps) {
+  // MÁGICA: Proteção de retrocompatibilidade
+  const chartData = data || radarChartData;
+
   const options: ApexOptions = {
     chart: {
       type: "radar",
@@ -14,53 +25,31 @@ export default function RadarChartCard() {
       fontFamily: "'Inter', sans-serif",
     },
     colors: ["#1e3a5f", "#7eb8da"],
-    fill: {
-      opacity: 0.25,
-    },
-    stroke: {
-      width: 2,
-    },
-    markers: {
-      size: 4,
-      strokeWidth: 0,
-    },
+    fill: { opacity: 0.25 },
+    stroke: { width: 2 },
+    markers: { size: 4, strokeWidth: 0 },
     xaxis: {
-      categories: radarChartData.categories,
+      categories: chartData.categories, // Usa a variável dinâmica
       labels: {
-        style: {
-          colors: "#8c9bb5",
-          fontSize: "12px",
-          fontWeight: 500,
-        },
+        style: { colors: "#8c9bb5", fontSize: "12px", fontWeight: 500 },
       },
     },
-    yaxis: {
-      show: false,
-    },
+    yaxis: { show: false },
     legend: {
       position: "bottom",
       horizontalAlign: "center",
       fontSize: "13px",
       fontWeight: 500,
-      labels: {
-        colors: "#1e3a5f",
-      },
-      markers: {
-        size: 8,
-        shape: "circle",
-      },
-      itemMargin: {
-        horizontal: 16,
-      },
+      labels: { colors: "#1e3a5f" },
+      markers: { size: 8, shape: "circle" },
+      itemMargin: { horizontal: 16 },
     },
     plotOptions: {
       radar: {
         polygons: {
           strokeColors: "#e8eef5",
           connectorColors: "#e8eef5",
-          fill: {
-            colors: ["#fafbfc", "#ffffff"],
-          },
+          fill: { colors: ["#fafbfc", "#ffffff"] },
         },
       },
     },
@@ -77,7 +66,7 @@ export default function RadarChartCard() {
       <div className={styles.chartWrapper}>
         <Chart
           options={options}
-          series={radarChartData.series}
+          series={chartData.series} // Usa a variável dinâmica
           type="radar"
           height={320}
         />

@@ -1,9 +1,7 @@
-.floatGroupButtonOpen {
-  font-size: 28px !important;
-  color: #ffffff !important;
-}
-
-.floatGroupButtonClose {
+/* =========================================
+   BOTÕES FLUTUANTES GERAIS (MANTIDOS)
+========================================= */
+.floatGroupButtonOpen, .floatGroupButtonClose {
   font-size: 28px !important;
   color: #ffffff !important;
 }
@@ -11,4 +9,330 @@
 .floatButton {
   font-size: 24px !important;
   color: #ffffff !important;
+}
+
+/* =========================================
+   ESTRUTURA DA PÁGINA
+========================================= */
+.pageContainer {
+  width: 100%;
+  padding: 0 20px 20px; /* Adiciona o respiro nas laterais e fundo conforme pedido */
+}
+
+.listTransition {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paginationWrapper {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  padding: 10px 20px;
+  border: 1px solid #d2d1d1;
+  border-radius: 10px;
+}
+
+/* =========================================
+   ESTRUTURA INTEGRADA (NOVA LÓGICA DO JAMES)
+========================================= */
+.splitPanelContainer {
+  display: flex;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px; /* Arredondamento apenas nas quinas externas do conjunto */
+  overflow: hidden; /* Garante que o conteúdo não vaze as quinas */
+  height: calc(100vh - 140px); /* Ocupa a altura até o fim da tela */
+  position: relative;
+}
+
+/* MENU LATERAL INTEGRADO (Não é mais suspenso) */
+.miniVerticalNav {
+  display: flex;
+  flex-direction: column;
+  background: #F8FAFC; /* Tom sutil para diferenciar do dashboard branco */
+  width: 70px; /* Largura fixa da barra lateral */
+  border-right: 1px solid #E2E8F0;
+  height: 100%;
+  padding: 20px 0;
+  
+  /* RESET DE FLUTUAÇÃO */
+  position: static; 
+  transform: none;
+  box-shadow: none;
+  
+  /* ESPAÇAMENTO SOLICITADO: Distância da lateral da tela (cards) */
+  margin-left: 0px; 
+}
+
+/* CONTEÚDO DO DASHBOARD (Vai até o fim) */
+.detailContent {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto; /* Scroll interno se os gráficos forem longos */
+  padding: 30px !important;
+  background: #FFFFFF;
+  
+  /* REMOÇÃO DOS ESTILOS DE "CARD" */
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* ITENS DO MENU INTEGRADO */
+.miniNavItem {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #8D99AE;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 4px solid transparent; /* Preparado para o estado ativo */
+}
+
+.miniNavItem:hover {
+  background: #F1F5F9;
+  color: #1e3a5f;
+}
+
+/* ESTADO ATIVO: Estilo de aba de sistema profissional */
+.miniNavActive {
+  background: #FFFFFF !important;
+  color: #1e3a5f !important;
+  border-left: 4px solid #1e3a5f !important; /* Barrinha lateral indicando seleção */
+}
+
+/* =========================================
+   COMPONENTES INTERNOS DO DASHBOARD
+========================================= */
+.unitHeaderBlock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.unitName {
+  color: #122A4C !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  margin: 0 !important;
+}
+
+.sectionTitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: #122A4C;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.statItem {
+  background: #F8FAFC;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  text-align: center;
+}
+
+.statCount {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e3a5f;
+}
+
+.statDesc {
+  font-size: 10px;
+  font-weight: 700;
+  color: #8D99AE;
+}
+
+/* =========================================
+   LISTAGENS E MASONRY
+========================================= */
+.masonryCompact {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  width: 100%;
+}
+
+.turmaListItem {
+  padding: 16px !important;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.turmaListItem:hover {
+  border-color: #3B82F6;
+  background: #F8FAFC;
+  transform: translateX(4px);
+}
+
+.tabAnimation {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   SUPORTE AO MODO ESCURO
+========================================= */
+:global(.dark-theme) .splitPanelContainer,
+:global(.dark-theme) .detailContent {
+  background: #141414 !important;
+  border-color: #303030 !important;
+}
+
+:global(.dark-theme) .miniVerticalNav {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+:global(.dark-theme) .miniNavActive {
+  background: #141414 !important;
+  color: #3b82f6 !important;
+  border-left-color: #3b82f6 !important;
+}
+
+:global(.dark-theme) .statItem,
+:global(.dark-theme) .turmaListItem {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+:global(.dark-theme) .unitName,
+:global(.dark-theme) .statCount {
+  color: #ffffff !important;
+}
+/* =========================================
+   ESTILIZAÇÃO DO FORMULÁRIO DE EDIÇÃO
+========================================= */
+.editFormContainer {
+  margin-top: 16px;
+  padding: 24px;
+  background: #F8FAFC; /* Fundo levemente cinza para destacar o formulário do painel branco */
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+/* Deixa as labels em negrito e com a cor padrão do sistema */
+.editFormContainer :global(.ant-form-item-label > label) {
+  font-weight: 700;
+  color: #122A4C;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/* Arredonda os inputs e dá um visual mais robusto */
+.editFormContainer :global(.ant-input),
+.editFormContainer :global(.ant-input-number),
+.editFormContainer :global(.ant-input-number-input) {
+  border-radius: 8px;
+  border: 1px solid #D2D9E5;
+  background: #FFFFFF;
+}
+
+/* Cor do foco nos inputs (Azul da marca) */
+.editFormContainer :global(.ant-input:focus),
+.editFormContainer :global(.ant-input:hover),
+.editFormContainer :global(.ant-input-number:focus),
+.editFormContainer :global(.ant-input-number:hover) {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* =========================================
+   BOTÕES DO FORMULÁRIO
+========================================= */
+.btnCancelar {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  color: #8D99AE !important;
+  border-color: #D2D9E5 !important;
+  transition: all 0.2s;
+}
+
+.btnCancelar:hover {
+  color: #122A4C !important;
+  border-color: #122A4C !important;
+  background: #F0F4F8 !important;
+}
+
+.btnSalvar {
+  background: #122A4C !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  transition: all 0.2s;
+}
+
+.btnSalvar:hover {
+  background: #1e3a5f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(18, 42, 76, 0.2);
+}
+
+/* Suporte ao Dark Mode para o formulário */
+:global(.dark-theme) .editFormContainer {
+  background: #1F1F1F;
+  border-color: #333;
+}
+:global(.dark-theme) .editFormContainer :global(.ant-form-item-label > label) {
+  color: #E2E8F0;
+}
+:global(.dark-theme) .editFormContainer :global(.ant-input),
+:global(.dark-theme) .editFormContainer :global(.ant-input-number) {
+  background: #2A2A2A;
+  border-color: #404040;
+  color: #FFFFFF;
+}
+
+/* =========================================
+   FORÇANDO O ÍCONE DO REACT-ICONS NO ANTD
+   (Estratégia de Alta Especificidade)
+========================================= */
+
+/* 1. Alinha o conteúdo interno do botão de dashboard */
+:global(.custom-float-btn-admin) :global(.ant-float-btn-body) {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* 2. Força o tamanho, cor e exibição direta na tag SVG do React-Icons */
+:global(.custom-float-btn-admin) :global(.ant-float-btn-icon) {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+
+:global(.custom-float-btn-admin) :global(.ant-float-btn-icon) svg {
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 24px !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  display: block !important;
+  visibility: visible !important;
 }

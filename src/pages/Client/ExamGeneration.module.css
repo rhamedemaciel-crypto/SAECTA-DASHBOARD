@@ -1,0 +1,94 @@
+/* src/pages/Client/ExamGeneration.module.css */
+
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  width: 100%;
+}
+
+.panelContainer {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.headerSection {
+  margin-bottom: 24px;
+}
+
+/* ALTO CONTRASTE - Títulos e Textos */
+.pageTitle {
+  color: #122A4C !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+}
+
+.pageDescription {
+  color: #334155 !important; /* Slate 700 - Cinza bem escuro para maior legibilidade */
+  font-size: 15px;
+  margin-top: 8px;
+  display: block;
+}
+
+.sectionTitle {
+  color: #0F172A !important; /* Slate 900 - Quase preto */
+  display: block;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.infoSection {
+  margin-bottom: 32px;
+}
+
+.filtersBox {
+  padding: 24px;
+  background: #F8FAFC;
+  border-radius: 12px;
+  border: 1px solid #94A3B8; /* Borda mais escura para delimitar bem a área */
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  gap: 12px;
+}
+
+.btnSubmit {
+  background: #122A4C !important;
+  border-color: #122A4C !important;
+  color: #ffffff !important;
+  height: 48px;
+  padding: 0 32px !important;
+  font-weight: 600 !important;
+}
+
+.btnSubmit:hover {
+  background: #0F223D !important;
+  border-color: #0F223D !important;
+}
+
+/* FORÇANDO ALTO CONTRASTE NO FORMULÁRIO DO ANT DESIGN */
+:global(.saecta-exam-form .ant-form-item-label > label) {
+  color: #0F172A !important; /* Labels quase pretas (Slate 900) */
+  font-weight: 600;
+  font-size: 14px;
+}
+
+:global(.saecta-exam-form .ant-select-selection-item),
+:global(.saecta-exam-form .ant-input) {
+  color: #0F172A !important; /* Texto preenchido bem escuro */
+  font-weight: 500;
+}
+
+:global(.saecta-exam-form .ant-select-selection-placeholder),
+:global(.saecta-exam-form input::placeholder) {
+  color: #64748B !important; /* Placeholders (Slate 500) com mais presença */
+}

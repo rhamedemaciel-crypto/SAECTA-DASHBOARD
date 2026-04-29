@@ -1,7 +1,14 @@
 .nav {
+  /* O SEGREDO DO FLUTUANTE */
+  position: fixed;
+  bottom: 24px; /* Distância do fundo da tela */
+  left: 50%; /* Joga para o meio */
+  transform: translateX(-50%); /* Centraliza perfeitamente no eixo X */
+  z-index: 999; /* Garante que sempre fique por cima de qualquer card ou paginação */
+  
   display: flex;
   justify-content: center;
-  padding: 24px 0 32px;
+  padding: 0; /* Removi o padding antigo que ocupava espaço na página */
 }
 
 .container {
@@ -9,8 +16,8 @@
   gap: 8px;
   background: #ffffff;
   padding: 8px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
+  border-radius: 100px; /* Aumentei o border-radius para ficar estilo pílula */
+  box-shadow: 0 8px 32px rgba(30, 58, 95, 0.15); /* Sombra um pouco mais forte para o efeito de flutuação */
 }
 
 .navItem {
@@ -21,7 +28,7 @@
   padding: 12px 28px;
   border: none;
   background: transparent;
-  border-radius: 12px;
+  border-radius: 50px; /* Acompanha o arredondamento do container */
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -51,4 +58,20 @@
   color: #8c9bb5;
   letter-spacing: 0.5px;
   transition: color 0.2s ease;
+}
+
+/* =========================================
+   SUPORTE AO MODO ESCURO (Dark Mode)
+========================================= */
+:global(.dark-theme) .container {
+  background: #1F1F1F;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+:global(.dark-theme) .navItem:hover {
+  background: #2A2A2A;
+}
+
+:global(.dark-theme) .navItem.active {
+  background: #3B82F6; /* Azul de destaque no dark mode */
 }

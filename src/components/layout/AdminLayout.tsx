@@ -8,7 +8,7 @@ const { Header, Content } = Layout;
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
-  // Estado para controlar o modo escuro
+  
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Estados e Referência para controlar a pesquisa expansível
@@ -16,7 +16,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [searchValue, setSearchValue] = useState('');
   const searchInputRef = useRef<any>(null);
 
-  // Efeito que adiciona ou remove a classe 'dark-theme' do HTML dependendo do estado
+ 
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
@@ -25,23 +25,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [isDarkMode]);
 
-  // --- Funções da Barra de Pesquisa Animada ---
   const handleSearchClick = () => {
     setIsSearchExpanded(true);
-    // Pequeno delay para garantir que a animação CSS começou antes de focar
+    
     setTimeout(() => {
       searchInputRef.current?.focus();
     }, 100);
   };
 
   const handleSearchBlur = () => {
-    // Só fecha a barra se o usuário clicar fora E não tiver digitado nada
+    
     if (!searchValue) {
       setIsSearchExpanded(false);
     }
   };
 
-  // Configuração do Menu Suspenso (Dropdown)
+  
   const menuItems: MenuProps['items'] = [
     {
       key: 'light',
@@ -93,8 +92,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <img src={logoSaecta} alt="SAECTA" className="header-logo" style={{ height: '60px', objectFit: 'contain' }} />
 
         <Space size="middle" style={{ display: 'flex', alignItems: 'center' }}>
-          
-          {/* PESQUISA ANIMADA (AGORA ENVOLVIDA NUMA DIV QUE NÃO FALHA O CLIQUE) */}
           <div onClick={handleSearchClick} style={{ cursor: 'pointer', display: 'flex' }}>
             <Input
               ref={searchInputRef}

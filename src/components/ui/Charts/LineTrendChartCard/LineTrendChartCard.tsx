@@ -6,7 +6,18 @@ import styles from "../ChartCard.module.css";
 
 const { Title } = Typography;
 
-export default function LineTrendChartCard() {
+// NOVO: Interface para dados dinâmicos
+interface LineProps {
+  data?: {
+    series: { name: string; data: number[] }[];
+    categories: string[];
+  };
+}
+
+export default function LineTrendChartCard({ data }: LineProps) {
+  // MÁGICA: Se houver dados específicos da unidade/turma, usa eles
+  const chartData = data || trendChartData;
+
   const options: ApexOptions = {
     chart: {
       type: "area",
@@ -29,59 +40,32 @@ export default function LineTrendChartCard() {
       width: [3, 2],
       dashArray: [0, 5],
     },
-    markers: {
-      size: 0,
-      hover: {
-        size: 6,
-      },
-    },
     xaxis: {
-      categories: trendChartData.categories,
+      categories: chartData.categories, // Dinâmico
       labels: {
-        style: {
-          colors: "#8c9bb5",
-          fontSize: "12px",
-          fontWeight: 500,
-        },
+        style: { colors: "#8c9bb5", fontSize: "12px", fontWeight: 500 },
       },
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
     yaxis: {
       labels: {
-        style: {
-          colors: "#8c9bb5",
-          fontSize: "12px",
-        },
+        style: { colors: "#8c9bb5", fontSize: "12px" },
         formatter: (val: number) => val.toFixed(0),
       },
     },
     grid: {
       borderColor: "#e8eef5",
       strokeDashArray: 4,
-      xaxis: { lines: { show: false } },
     },
     legend: {
       position: "bottom",
       horizontalAlign: "center",
-      fontSize: "13px",
-      fontWeight: 500,
-      labels: {
-        colors: "#1e3a5f",
-      },
-      markers: {
-        size: 8,
-        shape: "circle",
-      },
-      itemMargin: {
-        horizontal: 16,
-      },
+      labels: { colors: "#1e3a5f" },
     },
     tooltip: {
       theme: "light",
-      y: {
-        formatter: (val: number) => `${val}%`,
-      },
+      y: { formatter: (val: number) => `${val}%` },
     },
   };
 
@@ -95,9 +79,9 @@ export default function LineTrendChartCard() {
       <div className={styles.chartWrapper}>
         <Chart
           options={options}
-          series={trendChartData.series}
+          series={chartData.series} // Dinâmico
           type="area"
-          height={320}
+          height={280}
         />
       </div>
     </Card>

@@ -7,6 +7,7 @@ import CadastroAdmin from "./pages/Admin/CadastroAdmin";
 import AdminLayout from "./components/layout/AdminLayout";
 import Units from "./pages/Client/Units";
 import BottomNav from "./components/ui/BottomNav/BottomNav";
+import ExamGeneration from './pages/Client/ExamGeneration';
 
 export default function App() {
   return (
@@ -14,6 +15,17 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
+        
+        {/* 👇 AQUI ESTAVA O ERRO! Adicionei o <BottomNav /> 👇 */}
+        <Route 
+          path="/client/gerar-prova" 
+          element={
+            <AdminLayout>
+              <ExamGeneration />
+              <BottomNav />
+            </AdminLayout>
+          } 
+        />
 
         {/* A Home e as outras telas OBRIGATORIAMENTE dentro do Layout */}
         <Route
