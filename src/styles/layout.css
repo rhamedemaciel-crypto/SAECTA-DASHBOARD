@@ -1,192 +1,123 @@
-/* --- BOTÕES DO HEADER --- */
+
 .header-action-btn {
-  border-radius: 12px !important;
-  border: 1px solid #e2e8f0 !important;
-  background: radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f5f7fa 100%
-  ) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
-  width: 44px !important;
-  height: 44px !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
+  border-radius: 12px !important; border: 1px solid #E2E8F0 !important;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F5F7FA 100%) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
+  width: 44px !important; height: 44px !important;
+  display: flex !important; align-items: center; justify-content: center;
   transition: all 0.3s ease;
 }
 
 .header-action-btn:hover {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
-  transform: translateY(-1px);
+  background: #FFFFFF !important; border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important; transform: translateY(-1px);
 }
 
-/* --- PAGINAÇÃO --- */
+
 .ant-pagination-item,
 .ant-pagination-prev .ant-pagination-item-link,
 .ant-pagination-next .ant-pagination-item-link {
-  border-radius: 12px !important;
-  border: 1px solid #e2e8f0 !important;
-  background: radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f5f7fa 100%
-  ) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
-  transition: all 0.3s ease;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
+  border-radius: 12px !important; border: 1px solid #E2E8F0 !important;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F5F7FA 100%) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
+  transition: all 0.3s ease; display: inline-flex !important;
+  align-items: center; justify-content: center;
 }
 
-.ant-pagination-item-active {
-  border-color: #122a4c !important;
-  background: #122a4c !important;
-}
-.ant-pagination-item-active a {
-  color: #ffffff !important;
-}
+.ant-pagination-item-active { border-color: #122A4C !important; background: #122A4C !important; }
+.ant-pagination-item-active a { color: #FFFFFF !important; }
 
 .ant-pagination-item:hover:not(.ant-pagination-item-active),
 .ant-pagination-prev:hover .ant-pagination-item-link,
 .ant-pagination-next:hover .ant-pagination-item-link {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
-  transform: translateY(-1px);
+  background: #FFFFFF !important; border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important; transform: translateY(-1px);
 }
 
-/* --- BOTÃO FLUTUANTE (SPEED DIAL) --- */
+
 .custom-float-group .ant-float-btn-body {
-  border: 2px solid #3b82f6 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+  border: 2px solid #3B82F6 !important; display: flex !important;
+  justify-content: center !important; align-items: center !important;
   background-color: #3531f0d5 !important;
 }
 
 .custom-float-group > .ant-float-btn {
-  width: 64px !important;
-  height: 64px !important;
-  background: #193051 !important;
-  border-radius: 32px !important;
-  /* border-color: #5d97ea !important; */
+  width: 64px !important; height: 64px !important;
+  background: #193051 !important; border-radius: 32px !important; border-color: #5d97ea !important;
 }
 
-.custom-float-group > .ant-float-btn .ant-float-btn-body {
-  width: 100% !important;
-  height: 100% !important;
-}
-.custom-float-group > .ant-float-btn .ant-float-btn-icon {
-  font-size: 28px !important;
+.custom-float-group > .ant-float-btn .ant-float-btn-body { width: 100% !important; height: 100% !important; }
+.custom-float-group > .ant-float-btn .ant-float-btn-icon { font-size: 28px !important; }
+
+.custom-float-btn-admin, .custom-float-btn-cliente {
+  width: 54px !important; height: 54px !important; margin-bottom: 16px !important; 
+  position: relative !important; background: #193051 !important; border-radius: 27px !important;
+  border-color: #5d97ea !important; margin-left: 4px !important; 
 }
 
-.custom-float-btn-admin,
-.custom-float-btn-cliente {
-  width: 54px !important;
-  height: 54px !important;
-  margin-bottom: 16px !important;
-  position: relative !important;
-  background: #193051 !important;
-  border-radius: 27px !important;
-  border-color: #5d97ea !important;
-  margin-left: 4px !important;
+.custom-float-btn-admin .ant-float-btn-body, .custom-float-btn-cliente .ant-float-btn-body {
+  width: 100% !important; height: 100% !important;
 }
 
-.custom-float-btn-admin .ant-float-btn-body,
-.custom-float-btn-cliente .ant-float-btn-body {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.custom-float-btn-admin .ant-float-btn-icon,
-.custom-float-btn-cliente .ant-float-btn-icon {
+.custom-float-btn-admin .ant-float-btn-icon, .custom-float-btn-cliente .ant-float-btn-icon {
   font-size: 22px !important;
 }
 
-/* BALÕES DO BOTÃO FLUTUANTE */
-.custom-float-btn-admin::before,
-.custom-float-btn-cliente::before {
-  position: absolute !important;
-  right: 70px !important;
-  top: 70% !important;
-  transform: translateY(-50%) !important;
-  background-color: #262626 !important;
-  color: #ffffff !important;
-  padding: 10px 16px !important;
-  border-radius: 6px !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
-  white-space: nowrap !important;
-  pointer-events: none !important;
-  z-index: 1000 !important;
+
+.custom-float-btn-admin::before, .custom-float-btn-cliente::before {
+  position: absolute !important; right: 70px !important; top: 70% !important; transform: translateY(-50%) !important;
+  background-color: #262626 !important; color: #ffffff !important; padding: 10px 16px !important;
+  border-radius: 6px !important; font-size: 15px !important; font-weight: 500 !important;
+  white-space: nowrap !important; pointer-events: none !important; z-index: 1000 !important;
   box-shadow: 0 4px 12px rgba(6, 9, 221, 0.712) !important;
 }
 
-.custom-float-btn-admin::after,
-.custom-float-btn-cliente::after {
-  content: "" !important;
-  position: absolute !important;
-  right: 60px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  border-width: 6px 0 6px 10px !important;
-  border-style: solid !important;
-  border-color: transparent transparent transparent #262626 !important;
-  pointer-events: none !important;
-  z-index: 1000 !important;
+.custom-float-btn-admin::after, .custom-float-btn-cliente::after {
+  content: '' !important; position: absolute !important; right: 60px !important; top: 50% !important;
+  transform: translateY(-50%) !important; border-width: 6px 0 6px 10px !important; border-style: solid !important;
+  border-color: transparent transparent transparent #262626 !important; pointer-events: none !important; z-index: 1000 !important;
 }
 
-.custom-float-btn-admin::before {
-  content: "Cadastrar Administrador" !important;
-}
-.custom-float-btn-cliente::before {
-  content: "Cadastrar Cliente" !important;
-}
+.custom-float-btn-admin::before { content: "Cadastrar Administrador" !important; }
+.custom-float-btn-cliente::before { content: "Cadastrar Cliente" !important; }
 
-/* --- PESQUISA EXPANSÍVEL NO HEADER --- */
+
 .header-search-input {
   border-radius: 12px !important;
-  border: 1px solid #e2e8f0 !important;
-  background: radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f5f7fa 100%
-  ) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  border: 1px solid #E2E8F0 !important;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F5F7FA 100%) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
   height: 44px !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Animação mais suave */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; 
   display: flex;
   align-items: center;
   padding: 0 14px !important;
   cursor: pointer;
-  overflow: hidden; /* Esconde o texto quando estiver fechando */
+  overflow: hidden; 
 }
 
 .header-search-input:hover {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  background: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important;
   transform: translateY(-1px);
 }
 
-/* Estado Fechado (Parece com um botão quadrado) */
+
 .header-search-input.collapsed {
   width: 44px !important;
-  height: 44px !important;
-  padding: 0 !important;
-  cursor: pointer !important;
+  height: 44px !important; 
+  padding: 0 !important; 
+  cursor: pointer !important; 
   justify-content: center !important;
 }
 
-/* Esconde o texto e a barrinha de digitar */
+
 .header-search-input.collapsed input {
   display: none !important;
 }
 
-/* Centraliza o ícone perfeitamente sem travar o mouse */
+
 .header-search-input.collapsed .ant-input-prefix {
   margin: 0 !important;
   display: flex !important;
@@ -194,32 +125,27 @@
   align-items: center !important;
 }
 
-/* Estado Aberto (Barra de pesquisa) */
 .header-search-input.expanded {
   width: 260px !important;
-  background: #ffffff !important;
+  background: #FFFFFF !important;
   cursor: text;
 }
 
 .header-search-input.expanded input {
   display: block;
   margin-left: 8px;
-  color: #3a4040;
+  color: #3A4040;
   background: transparent !important;
 }
 
-/* Tira a margem extra do ícone do Ant Design */
+
 .header-search-input .ant-input-prefix {
   margin-right: 0;
 }
 
-/* Compatibilidade com Dark Mode */
+
 .dark-theme .header-search-input {
-  background: radial-gradient(
-    circle at center,
-    #2a2a2a 0%,
-    #1f1f1f 100%
-  ) !important;
+  background: radial-gradient(circle at center, #2A2A2A 0%, #1F1F1F 100%) !important;
   border-color: #333333 !important;
 }
 
@@ -229,9 +155,9 @@
 }
 
 .dark-theme .header-search-input.expanded input {
-  color: #e2e8f0 !important;
+  color: #E2E8F0 !important;
 }
 
 .dark-theme .header-search-input.expanded input::placeholder {
-  color: #8d99ae !important;
+  color: #8D99AE !important;
 }

@@ -1,26 +1,76 @@
-/* src/pages/Client/ExamGeneration.module.css */
 
-.pageContainer {
-  display: flex;
-  justify-content: center;
+
+
+.rowContainer {
+  margin: 0;
+  width: 100%;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+
+.leftPanel {
+  background: #fff;
   padding: 24px;
-  width: 100%;
-}
-
-.panelContainer {
-  background: #ffffff;
-  padding: 40px;
   border-radius: 16px;
-  width: 100%;
-  max-width: 900px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
 
-.headerSection {
+.leftPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
 }
 
-/* ALTO CONTRASTE - Títulos e Textos */
+.listTitle {
+  color: #122A4C !important;
+  margin: 0 !important;
+}
+
+.btnNew {
+  background: #122A4C !important;
+  border-color: #122A4C !important;
+}
+
+.listItem {
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #E2E8F0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.listItem:hover {
+  border-color: #94A3B8;
+}
+
+.listItemSelected {
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+
+.avatarIcon {
+  background-color: #1e3a5f !important;
+}
+
+.listItemTitle {
+  font-weight: 700;
+  color: #0F172A;
+}
+
+
+@media (max-width: 991px) {
+  .hideOnMobileWhenPanelOpen {
+    display: none !important;
+  }
+}
+
+
 .pageTitle {
   color: #122A4C !important;
   margin: 0 !important;
@@ -28,14 +78,18 @@
 }
 
 .pageDescription {
-  color: #334155 !important; /* Slate 700 - Cinza bem escuro para maior legibilidade */
+  color: #334155 !important;
   font-size: 15px;
   margin-top: 8px;
   display: block;
 }
 
+.infoSection {
+  margin-bottom: 32px;
+}
+
 .sectionTitle {
-  color: #0F172A !important; /* Slate 900 - Quase preto */
+  color: #0F172A !important;
   display: block;
   margin-bottom: 16px;
   font-size: 16px;
@@ -43,15 +97,78 @@
   text-transform: uppercase;
 }
 
-.infoSection {
-  margin-bottom: 32px;
+.areaSection {
+  margin-top: 20px;
 }
 
-.filtersBox {
-  padding: 24px;
-  background: #F8FAFC;
+.areaCard {
+  margin-bottom: 24px;
+  border: 2px solid #122A4C;
   border-radius: 12px;
-  border: 1px solid #94A3B8; /* Borda mais escura para delimitar bem a área */
+  background: #F8FAFC;
+}
+
+.blocksContainer {
+  background: #FFFFFF;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  margin-top: 10px;
+}
+
+.blocksTitle {
+  display: block;
+  margin-bottom: 16px;
+  color: #122A4C;
+  font-weight: 600;
+}
+
+.blockItem {
+  border-bottom: 1px dashed #E2E8F0;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.centerCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+
+.deleteIcon {
+  color: #ff4d4f;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.deleteIcon:hover {
+  color: #cf1322;
+}
+
+.btnAddBlock {
+  color: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  margin-top: 8px;
+}
+
+.btnAddBlock:hover {
+  color: #2563EB !important;
+  border-color: #2563EB !important;
+  background: #EFF6FF !important;
+}
+
+.btnAddArea {
+  height: 50px;
+  border-color: #122A4C !important;
+  color: #122A4C !important;
+  font-weight: 600 !important;
+}
+
+.btnAddArea:hover {
+  background: #F1F5F9 !important;
 }
 
 .actionButtons {
@@ -75,20 +192,59 @@
   border-color: #0F223D !important;
 }
 
-/* FORÇANDO ALTO CONTRASTE NO FORMULÁRIO DO ANT DESIGN */
+
+.avatarLarge {
+  background-color: #122A4C !important;
+}
+
+.detailTitle {
+  margin: 0 !important;
+  color: #122A4C !important;
+}
+
+.btnPrint {
+  margin-left: auto;
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+
+.btnPrint:hover {
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+.statsContainer {
+  display: flex;
+  gap: 24px;
+}
+
+.statBox {
+  padding: 20px;
+  background: #F8FAFC;
+  border-radius: 12px;
+  flex: 1;
+  text-align: center;
+}
+
+.statValue {
+  color: #122A4C !important;
+  margin: 0 !important;
+}
+
+
 :global(.saecta-exam-form .ant-form-item-label > label) {
-  color: #0F172A !important; /* Labels quase pretas (Slate 900) */
+  color: #0F172A !important;
   font-weight: 600;
   font-size: 14px;
 }
 
 :global(.saecta-exam-form .ant-select-selection-item),
 :global(.saecta-exam-form .ant-input) {
-  color: #0F172A !important; /* Texto preenchido bem escuro */
+  color: #0F172A !important;
   font-weight: 500;
 }
 
 :global(.saecta-exam-form .ant-select-selection-placeholder),
 :global(.saecta-exam-form input::placeholder) {
-  color: #64748B !important; /* Placeholders (Slate 500) com mais presença */
+  color: #64748B !important;
 }

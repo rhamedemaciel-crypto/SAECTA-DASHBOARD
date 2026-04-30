@@ -6,7 +6,7 @@ import styles from "../ChartCard.module.css";
 
 const { Title, Text } = Typography;
 
-// NOVO: Interface para receber dados dinâmicos
+
 interface DonutProps {
   data?: {
     series: number[];
@@ -16,7 +16,7 @@ interface DonutProps {
 }
 
 export default function DonutChartCard({ data, title = "ÁREAS DO CONHECIMENTO" }: DonutProps) {
-  // MÁGICA: Se receber 'data', usa ela. Se não, usa o donutChartData original (não quebra a Home)
+  
   const chartData = data || donutChartData; 
 
   const options: ApexOptions = {
@@ -36,7 +36,7 @@ export default function DonutChartCard({ data, title = "ÁREAS DO CONHECIMENTO" 
         },
       },
     ],
-    labels: chartData.labels, // Usa a variável dinâmica
+    labels: chartData.labels, 
     legend: {
       position: "right",
       offsetY: 0,
@@ -55,7 +55,7 @@ export default function DonutChartCard({ data, title = "ÁREAS DO CONHECIMENTO" 
       <div className={styles.chartWrapper}>
         <Chart
           options={options}
-          series={chartData.series} // Usa a variável dinâmica
+          series={chartData.series} 
           type="donut"
           height={320}
         />

@@ -1,6 +1,10 @@
 .form-section-card {
-  background: #FFFFFF; border: 2px solid #D2D9E5; border-radius: 16px;
-  padding: 32px 32px 8px 32px; margin-bottom: 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  background: #FFFFFF; 
+  border: 2px solid #D2D9E5; 
+  border-radius: 16px;
+  padding: 32px 32px 8px 32px; 
+  margin-bottom: 32px; 
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
   transition: all 0.3s ease;
 }
 
@@ -14,20 +18,36 @@
   border-right: 2px solid #122A4C; border-bottom: 2px solid #122A4C; transform: rotate(45deg); margin-top: -4px;
 }
 
+
 .custom-input, .custom-select .ant-select-selector {
-  border-radius: 8px !important; border: 1px solid #E2E8F0 !important; background-color: #FAFAFA !important;
-  color: #3A4040 !important; transition: all 0.3s ease !important; height: 44px !important;
-  display: flex; align-items: center;
+  border-radius: 8px !important; 
+  
+  border-width: 2px !important; 
+  border-style: solid !important;
+  
+  
+  border-color: #020f25; 
+  
+  background-color: #FAFAFA;
+  color: #070707; 
+  transition: all 0.3s ease !important; 
+  height: 48px !important;
+  display: flex; 
+  align-items: center;
 }
 
+
 .custom-input:focus, .custom-input:hover, .custom-select:hover .ant-select-selector, .ant-select-focused .ant-select-selector {
-  border-color: #3B82F6 !important; background-color: #FFFFFF !important; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+  border-color: #0e3677 !important; 
+  background-color: #ffffff; 
+  box-shadow: 0 0 0 2px rgba(0, 98, 255, 0.1) !important;
 }
 
 .input-icon { color: #A0AABF; margin-right: 8px; font-size: 16px; }
 
 .avatar-edit-badge {
-  position: absolute; bottom: 0; right: 0; background-color: #FFFFFF; border: 1px solid #E2E8F0;
+  position: absolute; bottom: 0; right: 0; background-color: #FFFFFF; 
+  border: 1px solid #E2E8F0; 
   border-radius: 50%; padding: 8px; display: flex; justify-content: center; align-items: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #10B981; font-size: 16px; transition: all 0.2s;
 }
@@ -36,7 +56,8 @@
 
 .btn-salvar {
   background-color: #122A4C !important; border-radius: 8px !important; padding: 0 48px !important;
-  height: 48px !important; font-weight: 700 !important; letter-spacing: 1px !important; border: none !important;
+  height: 48px !important; font-weight: 700 !important; letter-spacing: 1px !important; 
+  border: none !important;
   box-shadow: 0 4px 12px rgba(18, 42, 76, 0.2) !important; transition: all 0.3s;
 }
 

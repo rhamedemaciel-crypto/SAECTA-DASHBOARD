@@ -99,7 +99,17 @@ export default function Login() {
               </Form.Item>
 
               <div className="forgot-password-container">
-                <a href="#!" className="forgot-password-link">Esqueci minha senha</a>
+                {/* 👇 AQUI FOI A ÚNICA MUDANÇA (Navegação Ativada) 👇 */}
+                <a 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/esqueci-senha');
+                  }} 
+                  href="/esqueci-senha" 
+                  className="forgot-password-link"
+                >
+                  Esqueci minha senha
+                </a>
               </div>
 
               <Form.Item>

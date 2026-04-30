@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Auth/Login";
+import ForgotPassword from "./pages/Auth/ForgotPassword"; // 👇 Novo Import
 import Home from "./pages/Admin/Home";
 import HomeClient from "./pages/Client/HomeClient";
 import CadastroCliente from "./pages/Admin/CadastroCliente";
@@ -15,6 +16,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
+        
+        {/* 👇 Nova Rota Adicionada 👇 */}
+        <Route path="/esqueci-senha" element={<ForgotPassword />} />
         
         {/* 👇 AQUI ESTAVA O ERRO! Adicionei o <BottomNav /> 👇 */}
         <Route 

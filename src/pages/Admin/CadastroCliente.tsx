@@ -9,19 +9,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function CadastroCliente() {
   const navigate = useNavigate();
-  const location = useLocation(); // Hook para capturar o "state" enviado pela tela anterior
+  const location = useLocation(); 
   const [form] = Form.useForm();
 
-  // Verifica se existe algum dado vindo do clique nos três pontinhos
+  
   const editData = location.state?.clientData;
 
-  // Efeito que preenche o formulário automaticamente se for o modo Edição
+  
   useEffect(() => {
     if (editData) {
       form.setFieldsValue({
         nome: editData.titulo,
         codigo: editData.codigo,
-        logradouro: editData.endereco, // Aproveitamos a string de endereço no campo logradouro
+        logradouro: editData.endereco, 
       });
     }
   }, [editData, form]);
@@ -29,7 +29,7 @@ export default function CadastroCliente() {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
       
-      {/* HEADER DA PÁGINA (Botão Voltar e Título) */}
+      
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '40px' }}>
         <Button
           type="text"
@@ -39,25 +39,25 @@ export default function CadastroCliente() {
           style={{ marginRight: '16px' }}
         />
         <h2 className="page-title" style={{ margin: 0, color: '#122A4C', fontSize: '20px', fontWeight: 800, letterSpacing: '0.5px' }}>
-          {/* O título muda dinamicamente! */}
+          
           {editData ? 'EDITAR CLIENTE' : 'CADASTRAR CLIENTE'}
         </h2>
       </div>
 
       <Form form={form} layout="vertical" requiredMark={false}>
         
-        {/* UPLOAD DE AVATAR / LOGO */}
+        
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '48px' }}>
           <Upload name="logo" listType="picture-circle" showUploadList={false}>
             <div style={{ position: 'relative', cursor: 'pointer' }}>
-              {/* Usa a logo da escola se estiver editando, senão usa o brasão padrão */}
+              
               <Avatar 
                 size={120} 
                 src={editData ? editData.logo : "https://cdn-icons-png.flaticon.com/512/1940/1940611.png"} 
                 style={{ border: '3px solid #E2E8F0', padding: '4px', backgroundColor: '#FFF' }} 
               />
               
-              {/* O botãozinho verde de edição */}
+              
               <div className="avatar-edit-badge">
                 <EditOutlined />
               </div>
@@ -65,7 +65,7 @@ export default function CadastroCliente() {
           </Upload>
         </div>
 
-        {/* SESSÃO 1: DADOS BÁSICOS */}
+        
         <div className="form-section-card">
           <h3 className="form-section-title">DADOS BÁSICOS</h3>
           <Row gutter={24}>
@@ -86,7 +86,13 @@ export default function CadastroCliente() {
             </Col>
             <Col xs={24} md={8}>
               <Form.Item name="tipo">
-                <Select size="large" placeholder="Tipo" className="custom-select" suffixIcon={<AppstoreOutlined className="input-icon"/>}>
+                <Select 
+                  size="large" 
+                  placeholder="Tipo" 
+                  className="custom-select" 
+                  suffixIcon={<AppstoreOutlined className="input-icon"/>}
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode} 
+                >
                   <Select.Option value="escola">Escola</Select.Option>
                   <Select.Option value="universidade">Universidade</Select.Option>
                 </Select>
@@ -105,7 +111,7 @@ export default function CadastroCliente() {
           </Row>
         </div>
 
-        {/* SESSÃO 2: ENDEREÇO */}
+        
         <div className="form-section-card">
           <h3 className="form-section-title">ENDEREÇO</h3>
           <Row gutter={24}>

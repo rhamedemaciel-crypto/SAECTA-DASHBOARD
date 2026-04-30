@@ -11,7 +11,7 @@ body, html {
   background-color: #F5F7FA;
 }
 
-/* --- EFEITO MASONRY EXPANDIDO NAS LATERAIS --- */
+
 .masonry-grid {
   column-count: 4;
   column-gap: 32px;
@@ -38,7 +38,7 @@ body, html {
   padding-top: 40px;
 }
 
-/* --- BOLINHA AZUL DO MENU --- */
+
 .active-theme-dot {
   width: 8px;
   height: 8px;

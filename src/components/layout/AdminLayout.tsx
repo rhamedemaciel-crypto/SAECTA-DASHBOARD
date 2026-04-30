@@ -10,8 +10,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navigate = useNavigate();
   
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // Estados e Referência para controlar a pesquisa expansível
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const searchInputRef = useRef<any>(null);

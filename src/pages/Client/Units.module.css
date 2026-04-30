@@ -1,6 +1,4 @@
-/* =========================================
-   BOTÕES FLUTUANTES GERAIS (MANTIDOS)
-========================================= */
+
 .floatGroupButtonOpen, .floatGroupButtonClose {
   font-size: 28px !important;
   color: #ffffff !important;
@@ -11,12 +9,52 @@
   color: #ffffff !important;
 }
 
-/* =========================================
-   ESTRUTURA DA PÁGINA
-========================================= */
+.floatGroup {
+  bottom: 40px;
+  position: fixed;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  right: 40px;
+}
+
+.floatGroupShifted {
+  right: calc(66% + 40px);
+}
+
+@media (max-width: 991px) {
+  .floatGroupShifted {
+    right: 40px; 
+  }
+}
+
+.iconCentered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
 .pageContainer {
   width: 100%;
-  padding: 0 20px 20px; /* Adiciona o respiro nas laterais e fundo conforme pedido */
+  padding: 0 20px 20px;
+  position: relative;
+}
+
+.rowContainer {
+  margin: 0;
+  width: 100%;
+}
+
+.listColInner {
+ 
+  display: block; 
+  width: 100%;
+}
+
+.fullWidth {
+  width: 100%;
 }
 
 .listTransition {
@@ -29,58 +67,56 @@
   padding: 10px 20px;
   border: 1px solid #d2d1d1;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
 }
 
-/* =========================================
-   ESTRUTURA INTEGRADA (NOVA LÓGICA DO JAMES)
-========================================= */
+
 .splitPanelContainer {
   display: flex;
   width: 100%;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 16px; /* Arredondamento apenas nas quinas externas do conjunto */
-  overflow: hidden; /* Garante que o conteúdo não vaze as quinas */
-  height: calc(100vh - 140px); /* Ocupa a altura até o fim da tela */
+  border-radius: 16px;
+  overflow: hidden;
+  height: calc(100vh - 140px);
   position: relative;
 }
 
-/* MENU LATERAL INTEGRADO (Não é mais suspenso) */
+
 .miniVerticalNav {
   display: flex;
   flex-direction: column;
-  background: #F8FAFC; /* Tom sutil para diferenciar do dashboard branco */
-  width: 70px; /* Largura fixa da barra lateral */
+  background: #F8FAFC;
+  width: 70px;
   border-right: 1px solid #E2E8F0;
   height: 100%;
   padding: 20px 0;
-  
-  /* RESET DE FLUTUAÇÃO */
   position: static; 
   transform: none;
   box-shadow: none;
-  
-  /* ESPAÇAMENTO SOLICITADO: Distância da lateral da tela (cards) */
   margin-left: 0px; 
 }
 
-/* CONTEÚDO DO DASHBOARD (Vai até o fim) */
+.icon18 {
+  font-size: 18px;
+}
+
+
 .detailContent {
   flex: 1;
   min-width: 0;
   height: 100%;
-  overflow-y: auto; /* Scroll interno se os gráficos forem longos */
+  overflow-y: auto;
   padding: 30px !important;
   background: #FFFFFF;
-  
-  /* REMOÇÃO DOS ESTILOS DE "CARD" */
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
   margin-left: 0 !important;
 }
 
-/* ITENS DO MENU INTEGRADO */
+
 .miniNavItem {
   width: 100%;
   height: 60px;
@@ -91,7 +127,7 @@
   color: #8D99AE;
   cursor: pointer;
   transition: all 0.2s;
-  border-left: 4px solid transparent; /* Preparado para o estado ativo */
+  border-left: 4px solid transparent;
 }
 
 .miniNavItem:hover {
@@ -99,20 +135,26 @@
   color: #1e3a5f;
 }
 
-/* ESTADO ATIVO: Estilo de aba de sistema profissional */
 .miniNavActive {
   background: #FFFFFF !important;
   color: #1e3a5f !important;
-  border-left: 4px solid #1e3a5f !important; /* Barrinha lateral indicando seleção */
+  border-left: 4px solid #1e3a5f !important;
 }
 
-/* =========================================
-   COMPONENTES INTERNOS DO DASHBOARD
-========================================= */
+
 .unitHeaderBlock {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.avatarDarkBlue {
+  background-color: #1e3a5f !important;
+  color: #ffffff;
+}
+
+.unitAvatar {
+  background-color: #f1f5f9;
 }
 
 .unitName {
@@ -120,6 +162,38 @@
   font-weight: 800 !important;
   text-transform: uppercase;
   margin: 0 !important;
+}
+
+.unitLocation {
+  color: #8D99AE !important;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btnEditUnit {
+  margin-left: auto !important;
+  color: #8D99AE !important;
+}
+
+.btnNovaTurma {
+  background-color: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+
+.btnNovaTurma:hover {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+.dividerMargin {
+  margin: 16px 0 !important;
+}
+
+.dividerSpaced {
+  margin: 32px 0 16px 0 !important;
 }
 
 .sectionTitle {
@@ -159,43 +233,89 @@
   color: #8D99AE;
 }
 
-/* =========================================
-   LISTAGENS E MASONRY
-========================================= */
-.masonryCompact {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 12px !important;
+.chartsContainer {
+  margin-top: 24px;
+}
+
+.trendChartRow {
+  margin-top: 16px;
+}
+
+.tabHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  color: #8D99AE;
+}
+
+.btnBack {
+  padding: 0 !important;
+  margin-bottom: 16px !important;
+  font-weight: 600 !important;
+}
+
+.listTitleBold {
+  font-weight: 700 !important;
+  color: #122A4C !important;
+}
+
+
+.masonryFull {
+  column-count: 4;
+  column-gap: 24px;
   width: 100%;
 }
 
-.turmaListItem {
-  padding: 16px !important;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
+.masonryCompact {
+  column-count: 2;
+  column-gap: 16px;
+  width: 100%;
 }
 
-.turmaListItem:hover {
-  border-color: #3B82F6;
-  background: #F8FAFC;
-  transform: translateX(4px);
+.masonryItem {
+  display: inline-block;
+  width: 100%;          
+  margin-bottom: 24px; 
+  break-inside: avoid;  
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
 }
 
-.tabAnimation {
-  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+@media (max-width: 1600px) {
+  .masonryFull {
+    column-count: 3;
+  }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (max-width: 1200px) {
+  .masonryFull {
+    column-count: 2;
+  }
+  .masonryCompact {
+    column-count: 1;
+  }
 }
 
-/* =========================================
-   SUPORTE AO MODO ESCURO
-========================================= */
+@media (max-width: 991px) {
+  .masonryFull, .masonryCompact {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .masonryFull, .masonryCompact {
+    column-count: 1;
+  }
+}
+
+
 :global(.dark-theme) .splitPanelContainer,
 :global(.dark-theme) .detailContent {
   background: #141414 !important;
@@ -223,18 +343,23 @@
 :global(.dark-theme) .statCount {
   color: #ffffff !important;
 }
-/* =========================================
-   ESTILIZAÇÃO DO FORMULÁRIO DE EDIÇÃO
-========================================= */
+
+
 .editFormContainer {
   margin-top: 16px;
   padding: 24px;
-  background: #F8FAFC; /* Fundo levemente cinza para destacar o formulário do painel branco */
+  background: #F8FAFC;
   border-radius: 16px;
   border: 1px solid #E2E8F0;
 }
 
-/* Deixa as labels em negrito e com a cor padrão do sistema */
+.editActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+
 .editFormContainer :global(.ant-form-item-label > label) {
   font-weight: 700;
   color: #122A4C;
@@ -242,7 +367,6 @@
   text-transform: uppercase;
 }
 
-/* Arredonda os inputs e dá um visual mais robusto */
 .editFormContainer :global(.ant-input),
 .editFormContainer :global(.ant-input-number),
 .editFormContainer :global(.ant-input-number-input) {
@@ -251,7 +375,6 @@
   background: #FFFFFF;
 }
 
-/* Cor do foco nos inputs (Azul da marca) */
 .editFormContainer :global(.ant-input:focus),
 .editFormContainer :global(.ant-input:hover),
 .editFormContainer :global(.ant-input-number:focus),
@@ -260,9 +383,6 @@
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-/* =========================================
-   BOTÕES DO FORMULÁRIO
-========================================= */
 .btnCancelar {
   border-radius: 8px !important;
   font-weight: 600 !important;
@@ -291,7 +411,6 @@
   box-shadow: 0 6px 16px rgba(18, 42, 76, 0.2);
 }
 
-/* Suporte ao Dark Mode para o formulário */
 :global(.dark-theme) .editFormContainer {
   background: #1F1F1F;
   border-color: #333;
@@ -306,19 +425,13 @@
   color: #FFFFFF;
 }
 
-/* =========================================
-   FORÇANDO O ÍCONE DO REACT-ICONS NO ANTD
-   (Estratégia de Alta Especificidade)
-========================================= */
 
-/* 1. Alinha o conteúdo interno do botão de dashboard */
 :global(.custom-float-btn-admin) :global(.ant-float-btn-body) {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
 }
 
-/* 2. Força o tamanho, cor e exibição direta na tag SVG do React-Icons */
 :global(.custom-float-btn-admin) :global(.ant-float-btn-icon) {
   display: flex !important;
   justify-content: center !important;
