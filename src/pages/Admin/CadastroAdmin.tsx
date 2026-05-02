@@ -13,7 +13,7 @@ export default function CadastroAdmin() {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
       
-      {/* HEADER DA PÁGINA (Botão Voltar e Título) */}
+      
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '40px' }}>
         <Button
           type="text"
@@ -29,14 +29,14 @@ export default function CadastroAdmin() {
 
       <Form form={form} layout="vertical" requiredMark={false}>
         
-        {/* UPLOAD DE AVATAR */}
+        
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '48px' }}>
           <Upload name="avatar" listType="picture-circle" showUploadList={false}>
             <div style={{ position: 'relative', cursor: 'pointer' }}>
-              {/* Usando um avatar realístico temporário parecido com o do print */}
+              
               <Avatar size={120} src="https://i.pravatar.cc/150?img=11" style={{ border: '3px solid #E2E8F0', padding: '2px', backgroundColor: '#FFF' }} />
               
-              {/* O botãozinho verde de edição que já estilizamos no CSS */}
+              
               <div className="avatar-edit-badge">
                 <EditOutlined />
               </div>
@@ -44,7 +44,7 @@ export default function CadastroAdmin() {
           </Upload>
         </div>
 
-        {/* SESSÃO ÚNICA: DADOS BÁSICOS */}
+        
         <div className="form-section-card">
           <h3 className="form-section-title">DADOS BÁSICOS</h3>
           <Row gutter={24}>
@@ -75,7 +75,7 @@ export default function CadastroAdmin() {
             
             <Col xs={24} md={8}>
               <Form.Item name="nivelAcesso">
-                <Select size="large" placeholder="Nível De Acesso" className="custom-select" suffixIcon={<ArrowUpOutlined className="input-icon"/>}>
+                <Select size="large" placeholder="Nível De Acesso" className="custom-select" suffixIcon={<ArrowUpOutlined className="input-icon" />}>
                   <Select.Option value="master">Master</Select.Option>
                   <Select.Option value="gerente">Gerente</Select.Option>
                   <Select.Option value="suporte">Suporte</Select.Option>
@@ -96,7 +96,7 @@ export default function CadastroAdmin() {
           </Row>
         </div>
 
-        {/* BOTÃO SALVAR */}
+        
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
           <Button type="primary" htmlType="submit" size="large" className="btn-salvar">
             SALVAR

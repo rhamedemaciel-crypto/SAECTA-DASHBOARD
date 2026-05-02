@@ -177,3 +177,180 @@ body.dark-theme { background-color: #141414 !important; }
   background-color: #3B82F6 !important;
   color: #FFFFFF !important;
 } 
+
+/* ========================================================
+   CORREÇÕES PARA OS MÓDULOS CSS (Área de Gráficos e Provas)
+   ======================================================== */
+
+/* Força fundo escuro nos containers que usam CSS Modules */
+.dark-theme [class*="card"],
+.dark-theme [class*="leftPanel"],
+.dark-theme [class*="detailContent"],
+.dark-theme [class*="statBox"],
+.dark-theme [class*="unitHeaderBlock"],
+.dark-theme [class*="pageContainer"],
+.dark-theme [class*="splitPanelContainer"] {
+  background-color: #1F1F1F !important;
+  border-color: #333333 !important;
+}
+
+/* Corrige a lista de provas geradas */
+.dark-theme .ant-list-item {
+  background-color: transparent !important;
+  border-bottom-color: #333333 !important;
+}
+.dark-theme .ant-list-item-meta-title,
+.dark-theme .ant-list-item-meta-description {
+  color: #E2E8F0 !important;
+}
+.dark-theme .ant-list-item:hover,
+.dark-theme [class*="listItemSelected"] {
+  background-color: #334155 !important;
+}
+
+/* Força cor clara em todos os textos dos módulos CSS */
+.dark-theme [class*="title"],
+.dark-theme [class*="Title"],
+.dark-theme [class*="text"],
+.dark-theme [class*="description"],
+.dark-theme [class*="statValue"] {
+  color: #E2E8F0 !important;
+}
+
+/* ========================================================
+   AJUSTES FINOS - BUGFIX (Formulários, Blocos e Avatares)
+   ======================================================== */
+
+/* 1. Corrige o fundo branco na área "Composição dos Blocos" */
+.dark-theme [class*="blocksContainer"],
+.dark-theme [class*="blockItem"] {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+/* 2. FORÇA BRUTA: Labels dos formulários (inclusive os obrigatórios) */
+.dark-theme .ant-form-item-label > label,
+.dark-theme .ant-form-item-label > label.ant-form-item-required {
+  color: #E2E8F0 !important; /* Força a cor cinza clarinha/branca */
+}
+
+/* Garante que o asterisco vermelho continue visível */
+.dark-theme .ant-form-item-label > label.ant-form-item-required::before {
+  color: #ff4d4f !important; 
+}
+
+/* 3. CORREÇÃO DOS AVATARES CORTADOS NAS UNIDADES */
+/* Tira a "guilhotina" de todos os cards */
+.dark-theme .ant-card,
+.dark-theme .saecta-card,
+.dark-theme [class*="card"] {
+  overflow: visible !important; 
+}
+
+/* Garante fundo branco nos avatares para logos transparentes não sumirem */
+.dark-theme .card-floating-avatar,
+.dark-theme .ant-avatar {
+  background-color: #FFFFFF !important;
+  border: 2px solid #1F1F1F !important;
+  z-index: 10 !important; /* Joga o avatar para frente, evitando ser coberto por outro elemento */
+}
+
+/* ========================================================
+   CORREÇÕES DA TELA INICIAL (Fundo, Gráficos e Ícones)
+   ======================================================== */
+
+/* 1. Corrige a "parede" de fundo branca cobrindo a tela toda */
+.dark-theme [class*="pageContainer"],
+.dark-theme [class*="homeContainer"],
+.dark-theme [class*="mainWrapper"],
+.dark-theme .ant-layout,
+.dark-theme .ant-layout-content {
+  background-color: #141414 !important;
+}
+
+/* 2. FORÇA BRUTA NOS GRÁFICOS (ApexCharts Global) */
+/* Pinta de claro todos os textos de eixos, labels do radar e porcentagens */
+.dark-theme .apexcharts-text tspan,
+.dark-theme .apexcharts-text,
+.dark-theme .apexcharts-datalabel-value,
+.dark-theme .apexcharts-datalabel-label {
+  fill: #E2E8F0 !important;
+}
+
+/* Pinta de claro a legenda abaixo dos gráficos */
+.dark-theme .apexcharts-legend-text {
+  color: #E2E8F0 !important;
+}
+
+/* Corrige o fundo do Tooltip (a caixinha que aparece ao passar o mouse no gráfico) */
+.dark-theme .apexcharts-tooltip {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+}
+.dark-theme .apexcharts-tooltip-title {
+  background: #0F172A !important;
+  border-bottom: 1px solid #334155 !important;
+  color: #E2E8F0 !important;
+}
+.dark-theme .apexcharts-tooltip-text {
+  color: #E2E8F0 !important;
+}
+
+/* 3. Escurece o quadrado branco de fundo dos ícones dos 4 cartões do topo */
+.dark-theme [class*="iconWrapper"],
+.dark-theme [class*="iconContainer"],
+.dark-theme [class*="statIcon"] {
+  background-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+/* Força o estilo no seletor interno do Ant Design */
+.dark-theme .ant-select-lg.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: #1E293B !important;
+  border: 1px solid #334155 !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* Garante que o texto dentro do Select não fique preto */
+.dark-theme .ant-select-lg .ant-select-selection-item,
+.dark-theme .ant-select-lg .ant-select-selection-placeholder {
+  color: #F8FAFC !important;
+  line-height: 48px !important;
+}
+
+/* Alinha o ícone da setinha */
+.dark-theme .ant-select-lg .ant-select-arrow {
+  color: #94A3B8 !important;
+}
+/* ========================================================
+   CORREÇÃO DO SCROLL (TRAVADO) E CORES DA LISTA
+   ======================================================== */
+
+/* 1. Devolve a barra de rolagem para o painel direito que foi perdida */
+.dark-theme [class*="detailContent"],
+.dark-theme .form-section-card {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* 2. Garante 100% que os textos da lista de alunos fiquem claros */
+.dark-theme .ant-list-item-meta-title,
+.dark-theme .ant-list-item-meta-title > span,
+.dark-theme .ant-list-item-meta-title > div {
+  color: #E2E8F0 !important;
+}
+
+.dark-theme .ant-list-item-meta-description,
+.dark-theme .ant-list-item-meta-description > span {
+  color: #A0AABF !important;
+}
+
+/* 3. Fundo da lista ao passar o mouse (hover) para não ficar branco */
+.dark-theme .ant-list-item:hover {
+  background-color: #2A2A2A !important;
+  border-radius: 8px !important;
+}

@@ -44,6 +44,17 @@ const { Title, Text } = Typography;
 export default function Units() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  
+  // 👇 SOLUÇÃO INFALÍVEL: O "Detetive" do Dark Mode (igual aos gráficos)
+  const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-theme'));
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.body.classList.contains('dark-theme'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUnit, setSelectedUnit] = useState<any>(null);
@@ -54,6 +65,14 @@ export default function Units() {
 
   const itemsPerPage = selectedUnit ? 6 : 8;
   const currentItems = clientData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // 👇 FORÇA BRUTA NAS CORES (Adaptam-se 100% ao tema atual)
+  const bgColor = isDarkMode ? "#141414" : "transparent";
+  const panelBg = isDarkMode ? "#1F1F1F" : "#ffffff";
+  const textColor = isDarkMode ? "#E2E8F0" : "#1e3a5f";
+  const subTextColor = isDarkMode ? "#A0AABF" : "#8c9bb5";
+  const borderColor = isDarkMode ? "#334155" : "#e8eef5";
+  const miniNavBg = isDarkMode ? "#1E293B" : "#122A4C";
 
   useEffect(() => {
     if (selectedUnit && viewMode === 'edit') {
@@ -86,14 +105,12 @@ export default function Units() {
   };
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={styles.pageContainer} style={{ backgroundColor: bgColor }}>
       <Row gutter={[24, 24]} className={styles.rowContainer}>
 
-        {/* === LADO ESQUERDO: LISTA EM GRELHA ROBUSTA === */}
+        
         <Col xs={24} lg={selectedUnit ? 8 : 24} className={styles.listTransition}>
           <div className={styles.listColInner}>
-
-            {/* 👇 Aqui está o segredo: As classes do Grid CSS 👇 */}
             <div className={selectedUnit ? styles.masonryCompact : styles.masonryFull}>
               {currentItems.map((item) => (
                 <div className={styles.masonryItem} key={item.id}>
@@ -132,13 +149,14 @@ export default function Units() {
           </div>
         </Col>
 
-        {/* === LADO DIREITO: DASHBOARD OU FORMULÁRIO DE EDIÇÃO === */}
+        
         {selectedUnit && (
           <Col xs={24} lg={16} className={styles.detailSlideIn}>
             <div className={styles.splitPanelContainer}>
 
+              
               {viewMode === 'view' && (
-                <div className={styles.miniVerticalNav}>
+                <div className={styles.miniVerticalNav} style={{ backgroundColor: miniNavBg, borderColor }}>
                   <div
                     className={`${styles.miniNavItem} ${activeTab === 'dashboard' ? styles.miniNavActive : ''}`}
                     onClick={() => handleTabChange('dashboard')}
@@ -154,12 +172,17 @@ export default function Units() {
                 </div>
               )}
 
-              <div className={`form-section-card ${styles.detailContent}`}>
+              
+              <div 
+                className={`form-section-card ${styles.detailContent}`}
+                style={{ backgroundColor: panelBg, borderColor, transition: 'all 0.3s ease' }}
+              >
                 <Button
                   type="text"
                   icon={<CloseOutlined />}
                   onClick={handleClosePanel}
                   className={styles.closeBtn}
+                  style={{ color: textColor }}
                 />
 
                 <div className={styles.unitHeaderBlock}>
@@ -171,13 +194,15 @@ export default function Units() {
                     <Avatar size={64} src={selectedUnit.logo} className={styles.unitAvatar} />
                   )}
                   <div>
-                    <Title level={4} className={styles.unitName}>
+                    
+                    <Title level={4} className={styles.unitName} style={{ color: textColor, margin: 0 }}>
                       {viewMode === 'edit' ? `A editar: ${selectedUnit.titulo}` 
                         : selectedAluno ? selectedAluno.nome 
                         : selectedTurma ? selectedTurma.nome 
                         : selectedUnit.titulo}
                     </Title>
-                    <Text className={styles.unitLocation}>
+                    
+                    <Text className={styles.unitLocation} style={{ color: subTextColor }}>
                       {selectedAluno && viewMode === 'view' ? (
                         <>MATRÍCULA: {selectedAluno.matricula} | TURMA: {selectedTurma.nome}</>
                       ) : selectedTurma && viewMode === 'view' ? (
@@ -194,22 +219,18 @@ export default function Units() {
                       icon={<EditOutlined />} 
                       onClick={() => setViewMode('edit')}
                       className={styles.btnEditUnit}
+                      style={{ color: isDarkMode ? '#60A5FA' : '#1890ff' }}
                     >
                       Editar Unidade
                     </Button>
                   )}
                 </div>
 
-                <Divider className={styles.dividerMargin} />
+                <Divider className={styles.dividerMargin} style={{ borderColor }} />
 
                 {viewMode === 'edit' ? (
                   <div className={`${styles.tabAnimation} ${styles.editFormContainer}`}>
-                    <Form
-                      form={form}
-                      layout="vertical"
-                      onFinish={handleSave}
-                      requiredMark={false}
-                    >
+                    <Form form={form} layout="vertical" onFinish={handleSave} requiredMark={false}>
                       <Row gutter={16}>
                         <Col span={24}>
                           <Form.Item label="Nome da Unidade" name="titulo" rules={[{ required: true, message: 'O nome é obrigatório' }]}>
@@ -234,60 +255,50 @@ export default function Units() {
                       </Row>
                       
                       <div className={styles.editActions}>
-                        <Button size="large" className={styles.btnCancelar} onClick={() => setViewMode('view')}>
-                          Cancelar
-                        </Button>
-                        <Button size="large" type="primary" htmlType="submit" icon={<SaveOutlined />} className={styles.btnSalvar}>
-                          Salvar Alterações
-                        </Button>
+                        <Button size="large" className={styles.btnCancelar} onClick={() => setViewMode('view')}>Cancelar</Button>
+                        <Button size="large" type="primary" htmlType="submit" icon={<SaveOutlined />} className={styles.btnSalvar}>Salvar Alterações</Button>
                       </div>
                     </Form>
                   </div>
                 ) : (
                   <>
-                    {/* --- ABA: DASHBOARD GERAL --- */}
+                    
                     {activeTab === 'dashboard' && !selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
-                        <Text className={styles.sectionTitle}>Visão Geral da Unidade</Text>
+                        <Text className={styles.sectionTitle} style={{ color: textColor }}>Visão Geral da Unidade</Text>
 
-                        <div className={styles.statsContainer}>
-                          <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedUnit.dashboardGeral?.metrics.alunos || 0}</Text>
-                            <Text className={styles.statDesc}>ALUNOS</Text>
+                        <div className={styles.statsContainer} style={{ borderColor, backgroundColor: panelBg }}>
+                          <div className={styles.statItem} style={{ borderRight: `1px solid ${borderColor}` }}>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedUnit.dashboardGeral?.metrics.alunos || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>ALUNOS</Text>
+                          </div>
+                          <div className={styles.statItem} style={{ borderRight: `1px solid ${borderColor}` }}>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedUnit.dashboardGeral?.metrics.avaliacoes || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>AVALIAÇÕES</Text>
                           </div>
                           <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedUnit.dashboardGeral?.metrics.avaliacoes || 0}</Text>
-                            <Text className={styles.statDesc}>AVALIAÇÕES</Text>
-                          </div>
-                          <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedUnit.dashboardGeral?.metrics.aptos || 0}</Text>
-                            <Text className={styles.statDesc}>APTOS</Text>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedUnit.dashboardGeral?.metrics.aptos || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>APTOS</Text>
                           </div>
                         </div>
 
                         <div className={styles.chartsContainer}>
                           <Row gutter={[16, 16]}>
-                            <Col span={12}>
-                              <RadarChartCard data={selectedUnit.dashboardGeral?.radar} />
-                            </Col>
-                            <Col span={12}>
-                              <DonutChartCard data={selectedUnit.dashboardGeral?.donut} title="NÍVEL DE APRENDIZAGEM" />
-                            </Col>
+                            <Col span={12}><RadarChartCard data={selectedUnit.dashboardGeral?.radar} /></Col>
+                            <Col span={12}><DonutChartCard data={selectedUnit.dashboardGeral?.donut} title="NÍVEL DE APRENDIZAGEM" /></Col>
                           </Row>
                           <Row gutter={[16, 16]} className={styles.trendChartRow}>
-                            <Col span={24}>
-                              <LineTrendChartCard data={selectedUnit.dashboardGeral?.trend} />
-                            </Col>
+                            <Col span={24}><LineTrendChartCard data={selectedUnit.dashboardGeral?.trend} /></Col>
                           </Row>
                         </div>
                       </div>
                     )}
 
-                    {/* --- ABA: LISTA DE TURMAS --- */}
+                    
                     {activeTab === 'turmas' && !selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
                         <div className={styles.tabHeader}>
-                          <Text className={styles.sectionTitle}>Turmas Vinculadas</Text>
+                          <Text className={styles.sectionTitle} style={{ color: textColor }}>Turmas Vinculadas</Text>
                           <Button type="primary" size="small" icon={<PlusOutlined />} className={styles.btnNovaTurma}>NOVA TURMA</Button>
                         </div>
 
@@ -299,55 +310,49 @@ export default function Units() {
                               <List.Item className={styles.turmaListItem} onClick={() => setSelectedTurma(turma)}>
                                 <List.Item.Meta
                                   avatar={<Avatar icon={<SiGoogleclassroom />} className={styles.avatarDarkBlue} />}
-                                  title={<Text className={styles.listTitleBold}>{turma.nome}</Text>}
-                                  description={`Turno: ${turma.turno} | Alunos: ${turma.dashboardTurma?.metrics.alunos || 0}`}
+                                  title={<Text className={styles.listTitleBold} style={{ color: textColor }}>{turma.nome}</Text>}
+                                  description={<span style={{ color: subTextColor }}>Turno: {turma.turno} | Alunos: {turma.dashboardTurma?.metrics.alunos || 0}</span>}
                                 />
                               </List.Item>
                             )}
                           />
                         ) : (
-                          <div className={styles.emptyState}>Nenhuma turma cadastrada.</div>
+                          <div className={styles.emptyState} style={{ color: subTextColor }}>Nenhuma turma cadastrada.</div>
                         )}
                       </div>
                     )}
 
-                    {/* --- ABA: DASHBOARD DA TURMA --- */}
+                    
                     {selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
-                        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedTurma(null)} className={styles.btnBack}>
+                        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedTurma(null)} className={styles.btnBack} style={{ color: isDarkMode ? '#60A5FA' : '#1890ff' }}>
                           Voltar para Lista de Turmas
                         </Button>
 
-                        <div className={styles.statsContainer}>
-                          <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedTurma.dashboardTurma?.metrics.alunos || 0}</Text>
-                            <Text className={styles.statDesc}>ALUNOS</Text>
+                        <div className={styles.statsContainer} style={{ borderColor, backgroundColor: panelBg }}>
+                          <div className={styles.statItem} style={{ borderRight: `1px solid ${borderColor}` }}>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedTurma.dashboardTurma?.metrics.alunos || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>ALUNOS</Text>
                           </div>
                           <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedTurma.dashboardTurma?.metrics.avaliacoes || 0}</Text>
-                            <Text className={styles.statDesc}>AVALIAÇÕES</Text>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedTurma.dashboardTurma?.metrics.avaliacoes || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>AVALIAÇÕES</Text>
                           </div>
                         </div>
 
                         <div className={styles.chartsContainer}>
                           <Row gutter={[16, 16]}>
-                            <Col span={12}>
-                              <RadarChartCard data={selectedTurma.dashboardTurma?.radar} />
-                            </Col>
-                            <Col span={12}>
-                              <DonutChartCard data={selectedTurma.dashboardTurma?.donut} title="NÍVEL DA TURMA" />
-                            </Col>
+                            <Col span={12}><RadarChartCard data={selectedTurma.dashboardTurma?.radar} /></Col>
+                            <Col span={12}><DonutChartCard data={selectedTurma.dashboardTurma?.donut} title="NÍVEL DA TURMA" /></Col>
                           </Row>
                           <Row gutter={[16, 16]} className={styles.trendChartRow}>
-                            <Col span={24}>
-                              <LineTrendChartCard data={selectedTurma.dashboardTurma?.trend} />
-                            </Col>
+                            <Col span={24}><LineTrendChartCard data={selectedTurma.dashboardTurma?.trend} /></Col>
                           </Row>
                         </div>
 
-                        {/* LISTA DE ALUNOS */}
-                        <Divider className={styles.dividerSpaced} />
-                        <Text className={styles.sectionTitle}>Alunos da Turma</Text>
+                        
+                        <Divider className={styles.dividerSpaced} style={{ borderColor }} />
+                        <Text className={styles.sectionTitle} style={{ color: textColor }}>Alunos da Turma</Text>
                         
                         {selectedTurma.alunos && selectedTurma.alunos.length > 0 ? (
                           <List
@@ -357,53 +362,47 @@ export default function Units() {
                               <List.Item className={styles.turmaListItem} onClick={() => setSelectedAluno(aluno)}>
                                 <List.Item.Meta
                                   avatar={<Avatar src={aluno.avatar} icon={<PiStudentFill />} />}
-                                  title={<Text className={styles.listTitleBold}>{aluno.nome}</Text>}
-                                  description={`Média Geral: ${aluno.dashboardAluno?.metrics.media || '-'} | Matrícula: ${aluno.matricula}`}
+                                  title={<Text className={styles.listTitleBold} style={{ color: textColor }}>{aluno.nome}</Text>}
+                                  description={<span style={{ color: subTextColor }}>Média Geral: {aluno.dashboardAluno?.metrics.media || '-'} | Matrícula: {aluno.matricula}</span>}
                                 />
                               </List.Item>
                             )}
                           />
                         ) : (
-                          <div className={styles.emptyState}>Nenhum aluno cadastrado nesta turma.</div>
+                          <div className={styles.emptyState} style={{ color: subTextColor }}>Nenhum aluno cadastrado nesta turma.</div>
                         )}
                       </div>
                     )}
 
-                    {/* --- NÍVEL 3: DASHBOARD DO ALUNO --- */}
+                    
                     {selectedAluno && (
                       <div className={styles.tabAnimation}>
-                        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedAluno(null)} className={styles.btnBack}>
+                        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedAluno(null)} className={styles.btnBack} style={{ color: isDarkMode ? '#60A5FA' : '#1890ff' }}>
                           Voltar para {selectedTurma.nome}
                         </Button>
 
-                        <div className={styles.statsContainer}>
-                          <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedAluno.dashboardAluno?.metrics.media || 0}</Text>
-                            <Text className={styles.statDesc}>MÉDIA GERAL</Text>
+                        <div className={styles.statsContainer} style={{ borderColor, backgroundColor: panelBg }}>
+                          <div className={styles.statItem} style={{ borderRight: `1px solid ${borderColor}` }}>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedAluno.dashboardAluno?.metrics.media || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>MÉDIA GERAL</Text>
+                          </div>
+                          <div className={styles.statItem} style={{ borderRight: `1px solid ${borderColor}` }}>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedAluno.dashboardAluno?.metrics.faltas || 0}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>FALTAS</Text>
                           </div>
                           <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedAluno.dashboardAluno?.metrics.faltas || 0}</Text>
-                            <Text className={styles.statDesc}>FALTAS</Text>
-                          </div>
-                          <div className={styles.statItem}>
-                            <Text className={styles.statCount}>{selectedAluno.dashboardAluno?.metrics.posicao || "-"}</Text>
-                            <Text className={styles.statDesc}>POSIÇÃO NA TURMA</Text>
+                            <Text className={styles.statCount} style={{ color: textColor }}>{selectedAluno.dashboardAluno?.metrics.posicao || "-"}</Text>
+                            <Text className={styles.statDesc} style={{ color: subTextColor }}>POSIÇÃO NA TURMA</Text>
                           </div>
                         </div>
 
                         <div className={styles.chartsContainer}>
                           <Row gutter={[16, 16]}>
-                            <Col span={12}>
-                              <RadarChartCard data={selectedAluno.dashboardAluno?.radar} />
-                            </Col>
-                            <Col span={12}>
-                              <DonutChartCard data={selectedAluno.dashboardAluno?.donut} title="PERFIL DE APRENDIZADO" />
-                            </Col>
+                            <Col span={12}><RadarChartCard data={selectedAluno.dashboardAluno?.radar} /></Col>
+                            <Col span={12}><DonutChartCard data={selectedAluno.dashboardAluno?.donut} title="PERFIL DE APRENDIZADO" /></Col>
                           </Row>
                           <Row gutter={[16, 16]} className={styles.trendChartRow}>
-                            <Col span={24}>
-                              <LineTrendChartCard data={selectedAluno.dashboardAluno?.trend} />
-                            </Col>
+                            <Col span={24}><LineTrendChartCard data={selectedAluno.dashboardAluno?.trend} /></Col>
                           </Row>
                         </div>
                       </div>

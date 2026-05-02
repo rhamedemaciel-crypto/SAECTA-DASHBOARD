@@ -1,3 +1,4 @@
+import { useContext } from "react"; // 👇 Adicionado
 import { Select, Row, Col } from "antd";
 import MetricCard from "../../components/ui/MetricCard/MetricCard";
 import LineTrendChartCard from "../../components/ui/Charts/LineTrendChartCard/LineTrendChartCard";
@@ -6,10 +7,14 @@ import LearningLevelsCard from "../../components/ui/LearningLevelsCard/LearningL
 import { metricsData, yearOptions } from "../../data/mockData";
 import styles from "./HomeClient.module.css";
 import RadarChartCard from "../../components/ui/Charts/RadarChartCard/RadarChartCard";
+import { ThemeContext } from "../../components/layout/AdminLayout"; // 👇 Importa o contexto
 
 export default function HomeClient() {
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <div className={styles.page}>
+    // 👇 Mudança: Injetamos o background dinâmico para matar a "parede branca"
+    <div className={styles.page} style={{ backgroundColor: isDarkMode ? '#141414' : '#f0f2f5', minHeight: '100%' }}>
       <div className={styles.container}>
         <section className={styles.metricsSection}>
           <Row gutter={[20, 20]}>
@@ -30,6 +35,8 @@ export default function HomeClient() {
             defaultValue="2024"
             options={yearOptions}
             className={styles.yearSelect}
+            // 👇 Mudança: Garante que o dropdown do topo também fique escuro
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
             popupClassName={styles.selectDropdown}
           />
         </section>
@@ -38,7 +45,6 @@ export default function HomeClient() {
           <Row gutter={[20, 20]}>
             <Col xs={24} lg={12}>
               <RadarChartCard />
-              {/* <DonutChartCard /> */}
             </Col>
             <Col xs={24} lg={12}>
               <LineTrendChartCard />

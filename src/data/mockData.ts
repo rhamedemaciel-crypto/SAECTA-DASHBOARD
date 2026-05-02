@@ -110,7 +110,7 @@ export const clientData = [
             categories: ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN"]
           }
         },
-        // --- NÍVEL 3: LISTA DE ALUNOS ---
+
         alunos: [
           {
             id: 1001,

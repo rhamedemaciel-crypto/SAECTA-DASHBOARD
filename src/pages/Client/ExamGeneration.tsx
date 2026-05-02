@@ -76,7 +76,7 @@ export default function ExamGeneration() {
     <div className={layoutStyles.pageContainer}>
       <Row gutter={[24, 24]} className={examStyles.rowContainer}>
 
-        {/* ==================== LADO ESQUERDO: LISTAGEM ==================== */}
+        
         <Col 
           xs={isPanelOpen ? 0 : 24} 
           lg={isPanelOpen ? 8 : 24} 
@@ -112,7 +112,7 @@ export default function ExamGeneration() {
           </div>
         </Col>
 
-        {/* ==================== LADO DIREITO: FORMULÁRIO EM CASCATA ==================== */}
+        
         {isPanelOpen && (
           <Col xs={24} lg={16} className={layoutStyles.detailSlideIn}>
             <div className={layoutStyles.splitPanelContainer}>
@@ -127,7 +127,7 @@ export default function ExamGeneration() {
 
                     <Form form={form} layout="vertical" onFinish={handleGenerate} className="saecta-exam-form">
                       
-                      {/* --- NÍVEL 1: CABEÇALHO --- */}
+                      
                       <div className={examStyles.infoSection}>
                         <Text className={examStyles.sectionTitle}>1. Cabeçalho da Prova</Text>
                         <Row gutter={16}>
@@ -138,13 +138,19 @@ export default function ExamGeneration() {
                           </Col>
                           <Col span={8}>
                             <Form.Item label="Data de Aplicação" name="data_aplicacao" rules={[{ required: true }]}>
-                              <DatePicker size="large" className={examStyles.fullWidth} format="DD/MM/YYYY" />
+                              
+                              <DatePicker 
+                                size="large" 
+                                className={examStyles.fullWidth} 
+                                format="DD/MM/YYYY" 
+                                getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
+                              />
                             </Form.Item>
                           </Col>
                         </Row>
                       </div>
 
-                      {/* --- NÍVEL 2: ÁREAS TEMÁTICAS --- */}
+                      
                       {values?.titulo && values?.data_aplicacao && (
                         <Form.List name="areas">
                           {(areaFields, { add: addArea, remove: removeArea }) => (
@@ -164,7 +170,12 @@ export default function ExamGeneration() {
                                     <Row gutter={16}>
                                       <Col span={10}>
                                         <Form.Item {...areaField} name={[areaField.name, 'area_tematica']} label="Grande Área" rules={[{ required: true }]}>
-                                          <Select size="large" placeholder="Ex: Ciências da Natureza">
+                                          
+                                          <Select 
+                                            size="large" 
+                                            placeholder="Ex: Ciências da Natureza"
+                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                          >
                                             <Option value="Linguagens">Linguagens e Códigos</Option>
                                             <Option value="Matematica">Matemática e suas Tecnologias</Option>
                                             <Option value="Natureza">Ciências da Natureza</Option>
@@ -175,7 +186,14 @@ export default function ExamGeneration() {
                                       
                                       <Col span={14}>
                                         <Form.Item {...areaField} name={[areaField.name, 'disciplinas_selecionadas']} label="Disciplinas desta Área" rules={[{ required: true, message: 'Selecione pelo menos uma' }]}>
-                                          <Select mode="multiple" size="large" placeholder="Selecione as disciplinas" maxTagCount="responsive">
+                                          
+                                          <Select 
+                                            mode="multiple" 
+                                            size="large" 
+                                            placeholder="Selecione as disciplinas" 
+                                            maxTagCount="responsive"
+                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                          >
                                             <Option value="Portugues">Língua Portuguesa</Option>
                                             <Option value="Matematica">Matemática</Option>
                                             <Option value="Fisica">Física</Option>
@@ -188,7 +206,7 @@ export default function ExamGeneration() {
                                       </Col>
                                     </Row>
 
-                                    {/* --- NÍVEL 3: BLOCOS DE QUESTÕES --- */}
+                                    
                                     {disciplinasDestaArea.length > 0 && (
                                       <div className={examStyles.blocksContainer}>
                                         <Text className={examStyles.blocksTitle}>
@@ -209,7 +227,12 @@ export default function ExamGeneration() {
                                                     
                                                     <Col span={5}>
                                                       <Form.Item {...blocoField} label="Disciplina" name={[blocoField.name, 'disciplina_questao']} rules={[{ required: true }]}>
-                                                        <Select placeholder="Disciplina" size="large">
+                                                        
+                                                        <Select 
+                                                          placeholder="Disciplina" 
+                                                          size="large"
+                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                        >
                                                           {disciplinasDestaArea.map((disc: string) => (
                                                             <Option key={disc} value={disc}>{disc}</Option>
                                                           ))}
@@ -219,7 +242,12 @@ export default function ExamGeneration() {
                                                     
                                                     <Col span={5}>
                                                       <Form.Item {...blocoField} label="Tipo" name={[blocoField.name, 'tipo']} rules={[{ required: true }]}>
-                                                        <Select placeholder="Tipo" size="large">
+                                                        
+                                                        <Select 
+                                                          placeholder="Tipo" 
+                                                          size="large"
+                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                        >
                                                           <Option value="Objetiva">Objetiva</Option>
                                                           <Option value="Discursiva">Discursiva</Option>
                                                         </Select>
@@ -227,7 +255,12 @@ export default function ExamGeneration() {
                                                     </Col>
                                                     <Col span={4}>
                                                       <Form.Item {...blocoField} label="Nível" name={[blocoField.name, 'nivel']} rules={[{ required: true }]}>
-                                                        <Select placeholder="Nível" size="large">
+                                                        
+                                                        <Select 
+                                                          placeholder="Nível" 
+                                                          size="large"
+                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                        >
                                                           <Option value="Facil">Fácil</Option>
                                                           <Option value="Medio">Médio</Option>
                                                           <Option value="Dificil">Difícil</Option>
@@ -236,7 +269,14 @@ export default function ExamGeneration() {
                                                     </Col>
                                                     <Col span={5}>
                                                       <Form.Item {...blocoField} label="BNCC" name={[blocoField.name, 'bncc']}>
-                                                        <Select mode="multiple" placeholder="Opcional" size="large" maxTagCount="responsive">
+                                                        
+                                                        <Select 
+                                                          mode="multiple" 
+                                                          placeholder="Opcional" 
+                                                          size="large" 
+                                                          maxTagCount="responsive"
+                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                        >
                                                           <Option value="EF09MA01">EF09MA01</Option>
                                                           <Option value="EM13CNT101">EM13CNT101</Option>
                                                         </Select>
@@ -268,7 +308,7 @@ export default function ExamGeneration() {
                         </Form.List>
                       )}
 
-                      {/* --- AÇÃO FINAL --- */}
+                      
                       {values?.areas?.length > 0 && (
                         <div className={examStyles.actionButtons}>
                           <Button 

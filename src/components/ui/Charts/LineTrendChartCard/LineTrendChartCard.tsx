@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Card, Typography } from "antd";
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
@@ -6,7 +7,6 @@ import styles from "../ChartCard.module.css";
 
 const { Title } = Typography;
 
-// NOVO: Interface para dados dinâmicos
 interface LineProps {
   data?: {
     series: { name: string; data: number[] }[];
@@ -15,8 +15,26 @@ interface LineProps {
 }
 
 export default function LineTrendChartCard({ data }: LineProps) {
-  // MÁGICA: Se houver dados específicos da unidade/turma, usa eles
   const chartData = data || trendChartData;
+
+
+  const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-theme'));
+
+  useEffect(() => {
+
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.body.classList.contains('dark-theme'));
+    });
+    
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
+
+
+  const textColor = isDarkMode ? "#E2E8F0" : "#8c9bb5";
+  const gridColor = isDarkMode ? "#334155" : "#e8eef5";
+  const titleColor = isDarkMode ? "#E2E8F0" : "#1e3a5f";
 
   const options: ApexOptions = {
     chart: {
@@ -24,6 +42,7 @@ export default function LineTrendChartCard({ data }: LineProps) {
       toolbar: { show: false },
       fontFamily: "'Inter', sans-serif",
       zoom: { enabled: false },
+      foreColor: textColor, 
     },
     colors: ["#1e3a5f", "#b0c4de"],
     fill: {
@@ -41,30 +60,30 @@ export default function LineTrendChartCard({ data }: LineProps) {
       dashArray: [0, 5],
     },
     xaxis: {
-      categories: chartData.categories, // Dinâmico
+      categories: chartData.categories, 
       labels: {
-        style: { colors: "#8c9bb5", fontSize: "12px", fontWeight: 500 },
+        style: { colors: textColor, fontSize: "12px", fontWeight: 500 }, 
       },
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
     yaxis: {
       labels: {
-        style: { colors: "#8c9bb5", fontSize: "12px" },
+        style: { colors: textColor, fontSize: "12px" }, 
         formatter: (val: number) => val.toFixed(0),
       },
     },
     grid: {
-      borderColor: "#e8eef5",
+      borderColor: gridColor, 
       strokeDashArray: 4,
     },
     legend: {
       position: "bottom",
       horizontalAlign: "center",
-      labels: { colors: "#1e3a5f" },
+      labels: { colors: titleColor }, 
     },
     tooltip: {
-      theme: "light",
+      theme: isDarkMode ? "dark" : "light", 
       y: { formatter: (val: number) => `${val}%` },
     },
   };
@@ -72,14 +91,14 @@ export default function LineTrendChartCard({ data }: LineProps) {
   return (
     <Card className={styles.card} bordered={false}>
       <div className={styles.header}>
-        <Title level={5} className={styles.title}>
+        <Title level={5} className={styles.title} style={{ color: titleColor }}>
           TENDÊNCIA DE DESEMPENHO MENSAL
         </Title>
       </div>
       <div className={styles.chartWrapper}>
         <Chart
           options={options}
-          series={chartData.series} // Dinâmico
+          series={chartData.series} 
           type="area"
           height={280}
         />

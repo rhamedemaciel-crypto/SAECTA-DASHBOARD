@@ -153,7 +153,7 @@ export default function CadastroCliente() {
           </Row>
         </div>
 
-        {/* BOTÃO SALVAR */}
+        
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
           <Button type="primary" htmlType="submit" size="large" className="btn-salvar">
             SALVAR

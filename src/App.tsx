@@ -9,6 +9,7 @@ import AdminLayout from "./components/layout/AdminLayout";
 import Units from "./pages/Client/Units";
 import BottomNav from "./components/ui/BottomNav/BottomNav";
 import ExamGeneration from './pages/Client/ExamGeneration';
+import './styles/theme-dark.css';
 
 export default function App() {
   return (
@@ -17,10 +18,10 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         
-        {/* 👇 Nova Rota Adicionada 👇 */}
+        
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
         
-        {/* 👇 AQUI ESTAVA O ERRO! Adicionei o <BottomNav /> 👇 */}
+        
         <Route 
           path="/client/gerar-prova" 
           element={
@@ -31,7 +32,7 @@ export default function App() {
           } 
         />
 
-        {/* A Home e as outras telas OBRIGATORIAMENTE dentro do Layout */}
+        
         <Route
           path="/admin"
           element={

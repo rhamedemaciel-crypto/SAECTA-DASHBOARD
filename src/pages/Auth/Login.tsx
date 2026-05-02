@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Form, Input, Carousel, Typography, Row, Col, Space } from 'antd';
+import { Button, Form, Input, Carousel, Typography, Row, Col, Space, message } from 'antd';
 import { LockOutlined, UserOutlined, InstagramOutlined, YoutubeOutlined, WhatsAppOutlined, MailOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-// Importando as imagens diretamente da pasta assets
+import { setAuthCookie } from '../../utils/cookies';
+
 import logoSaecta from '../../assets/logo.png';
 import intro1 from '../../assets/intro.png';
 import intro2 from '../../assets/intro2.png';
@@ -15,21 +16,33 @@ const { Text } = Typography;
 export default function Login() {
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
-    console.log('Valores do formulário:', values);
-    navigate('/admin');
+  const onFinish = async (values: any) => {
+    try {
+     
+      
+      setAuthCookie('token-falso-para-teste-12345');
+      message.success('Passagem livre! Entrando no painel...');
+      navigate('/admin');
+      
+      return; 
+      
+
+    } catch (erro) {
+      console.error('Erro de autenticação:', erro);
+      message.error('Erro ao tentar forçar o login.');
+    }
   };
 
   return (
     <div className="login-wrapper">
       <Row className="login-container" align="middle" justify="center">
 
-        {/* COLUNA ESQUERDA - Branding e Carrossel */}
+        
         <Col xs={0} md={12} className="login-left-col">
           <div className="login-left-content">
 
             <div className="logo-container">
-              {/* Logo real carregada do assets */}
+              
               <img src={logoSaecta} alt="SAECTA" className="saecta-logo" />
             </div>
 
@@ -58,14 +71,13 @@ export default function Login() {
             <div className="partners-container">
               <Text style={{ color: '#EBEBEB', marginBottom: '8px', display: 'block', fontSize: '12px' }}>Parceiros</Text>
               <div className="partners-box">
-                {/* Texto temporário até termos a imagem oficial dos parceiros */}
+                
                 <span style={{ color: '#FFF', fontWeight: 600 }}>Google Cloud | KXP | ABES | Cirion</span>
               </div>
             </div>
           </div>
         </Col>
 
-        {/* COLUNA DIREITA - Formulário de Login */}
         <Col xs={24} md={12} className="login-right-col">
           <div className="login-form-wrapper">
 
@@ -86,7 +98,7 @@ export default function Login() {
                 name="user"
                 rules={[{ required: true, message: 'Insira seu usuário!' }]}
               >
-                {/* Trocamos para login-input */}
+                
                 <Input prefix={<UserOutlined />} placeholder="Digite seu usuário" className="login-input" />
               </Form.Item>
 
@@ -94,12 +106,11 @@ export default function Login() {
                 name="password"
                 rules={[{ required: true, message: 'Insira sua senha!' }]}
               >
-                {/* Trocamos para login-input */}
+                
                 <Input.Password prefix={<LockOutlined />} placeholder="Digite sua senha" className="login-input" />
               </Form.Item>
 
               <div className="forgot-password-container">
-                {/* 👇 AQUI FOI A ÚNICA MUDANÇA (Navegação Ativada) 👇 */}
                 <a 
                   onClick={(e) => {
                     e.preventDefault();
@@ -119,7 +130,7 @@ export default function Login() {
               </Form.Item>
             </Form>
 
-            {/* Rodapé do Form - Redes Sociais */}
+            
             <div className="login-footer">
               <Space size="large">
                 <div className="footer-icon-group">
