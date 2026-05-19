@@ -18,7 +18,7 @@ interface DonutProps {
 export default function DonutChartCard({ data, title = "ÁREAS DO CONHECIMENTO" }: DonutProps) {
   const chartData = data || donutChartData; 
   
-  // Detetive de Dark Mode
+
   const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-theme'));
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function DonutChartCard({ data, title = "ÁREAS DO CONHECIMENTO" 
     return () => observer.disconnect();
   }, []);
 
-  // Cores dinâmicas
+
   const textColor = isDarkMode ? "#E2E8F0" : "#1e3a5f";
   const subTextColor = isDarkMode ? "#A0AABF" : "#8c9bb5";
   const cardBg = isDarkMode ? "#1F1F1F" : "#ffffff";

@@ -6,7 +6,6 @@ import logoSaecta from '../../assets/logo.png';
 
 const { Header, Content } = Layout;
 
-// 👇 MUDANÇA: Criamos e exportamos um Contexto para compartilhar o estado do Dark Mode com os gráficos
 export const ThemeContext = createContext({ isDarkMode: false });
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -72,7 +71,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    // 👇 MUDANÇA: Envelopamos tudo no ThemeContext e no ConfigProvider do Ant Design
     <ThemeContext.Provider value={{ isDarkMode }}>
       <ConfigProvider theme={{ algorithm: isDarkMode ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm }}>
         <Layout style={{ minHeight: '100vh', background: 'transparent' }}>

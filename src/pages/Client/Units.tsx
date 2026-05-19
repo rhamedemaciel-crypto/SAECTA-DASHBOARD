@@ -12,7 +12,9 @@ import {
   List,
   Form,
   Input,
-  InputNumber
+  InputNumber,
+  Spin,
+  message
 } from "antd";
 import {
   PlusOutlined,
@@ -39,13 +41,16 @@ import { clientData } from "../../data/mockData";
 import styles from "./Units.module.css";
 import "../../styles/forms.css";
 
+import { subjectService } from "../../services/subjectService";
+import { skillService } from "../../services/skillService";
+import { classService } from "../../services/classService"; // NOVO: Serviço de Turmas
+
 const { Title, Text } = Typography;
 
 export default function Units() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   
-  // 👇 SOLUÇÃO INFALÍVEL: O "Detetive" do Dark Mode (igual aos gráficos)
   const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-theme'));
 
   useEffect(() => {
@@ -63,10 +68,54 @@ export default function Units() {
   const [selectedAluno, setSelectedAluno] = useState<any>(null);
   const [viewMode, setViewMode] = useState<'view' | 'edit'>('view');
 
+  const [turmas, setTurmas] = useState<any[]>([]);
+  const [loadingTurmas, setLoadingTurmas] = useState(false);
+
+  useEffect(() => {
+    async function runTests() {
+      try {
+        console.log("Iniciando busca de Disciplinas...");
+        const subjects = await subjectService.getAll();
+        console.log("✅ Disciplinas do Banco:", subjects);
+
+        console.log("Iniciando busca de Habilidades...");
+        const skills = await skillService.getAll();
+        console.log("✅ Habilidades do Banco:", skills);
+      } catch (error) {
+        console.error("❌ Falha no teste de conexão com Disciplinas/Habilidades:", error);
+      }
+    }
+    runTests();
+  }, []);
+
+  useEffect(() => {
+    if (selectedUnit && activeTab === 'turmas') {
+      fetchTurmasDoBanco(selectedUnit._id || selectedUnit.id);
+    }
+  }, [selectedUnit, activeTab]);
+
+  const fetchTurmasDoBanco = async (unitId: string) => {
+    setLoadingTurmas(true);
+    try {
+      const data = await classService.getAll();
+      if (Array.isArray(data)) {
+        const filtradas = data.filter((t: any) => t.client === unitId || t.clientId === unitId || t.unit === unitId);
+        setTurmas(filtradas.length > 0 ? filtradas : data); // Fallback: mostra todas se não houver vínculo explícito mapeado ainda
+      } else {
+        setTurmas([]);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar turmas do backend:", error);
+      message.error("Não foi possível carregar as turmas reais do servidor.");
+      setTurmas([]); // Garante que limpa o estado de mock antigo se falhar
+    } finally {
+      setLoadingTurmas(false);
+    }
+  };
+
   const itemsPerPage = selectedUnit ? 6 : 8;
   const currentItems = clientData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // 👇 FORÇA BRUTA NAS CORES (Adaptam-se 100% ao tema atual)
   const bgColor = isDarkMode ? "#141414" : "transparent";
   const panelBg = isDarkMode ? "#1F1F1F" : "#ffffff";
   const textColor = isDarkMode ? "#E2E8F0" : "#1e3a5f";
@@ -91,6 +140,7 @@ export default function Units() {
     setSelectedTurma(null);
     setSelectedAluno(null);
     setViewMode('view');
+    setTurmas([]);
   };
 
   const handleTabChange = (tab: 'dashboard' | 'turmas') => {
@@ -108,7 +158,6 @@ export default function Units() {
     <div className={styles.pageContainer} style={{ backgroundColor: bgColor }}>
       <Row gutter={[24, 24]} className={styles.rowContainer}>
 
-        
         <Col xs={24} lg={selectedUnit ? 8 : 24} className={styles.listTransition}>
           <div className={styles.listColInner}>
             <div className={selectedUnit ? styles.masonryCompact : styles.masonryFull}>
@@ -149,12 +198,10 @@ export default function Units() {
           </div>
         </Col>
 
-        
         {selectedUnit && (
           <Col xs={24} lg={16} className={styles.detailSlideIn}>
             <div className={styles.splitPanelContainer}>
 
-              
               {viewMode === 'view' && (
                 <div className={styles.miniVerticalNav} style={{ backgroundColor: miniNavBg, borderColor }}>
                   <div
@@ -172,7 +219,6 @@ export default function Units() {
                 </div>
               )}
 
-              
               <div 
                 className={`form-section-card ${styles.detailContent}`}
                 style={{ backgroundColor: panelBg, borderColor, transition: 'all 0.3s ease' }}
@@ -194,7 +240,6 @@ export default function Units() {
                     <Avatar size={64} src={selectedUnit.logo} className={styles.unitAvatar} />
                   )}
                   <div>
-                    
                     <Title level={4} className={styles.unitName} style={{ color: textColor, margin: 0 }}>
                       {viewMode === 'edit' ? `A editar: ${selectedUnit.titulo}` 
                         : selectedAluno ? selectedAluno.nome 
@@ -206,7 +251,7 @@ export default function Units() {
                       {selectedAluno && viewMode === 'view' ? (
                         <>MATRÍCULA: {selectedAluno.matricula} | TURMA: {selectedTurma.nome}</>
                       ) : selectedTurma && viewMode === 'view' ? (
-                        <>TURNO: {selectedTurma.turno.toUpperCase()}</>
+                        <>TURNO: {selectedTurma.turno ? selectedTurma.turno.toUpperCase() : 'N/A'}</>
                       ) : (
                         <><GlobalOutlined /> {selectedUnit.endereco}</>
                       )}
@@ -262,7 +307,6 @@ export default function Units() {
                   </div>
                 ) : (
                   <>
-                    
                     {activeTab === 'dashboard' && !selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
                         <Text className={styles.sectionTitle} style={{ color: textColor }}>Visão Geral da Unidade</Text>
@@ -294,7 +338,6 @@ export default function Units() {
                       </div>
                     )}
 
-                    
                     {activeTab === 'turmas' && !selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
                         <div className={styles.tabHeader}>
@@ -302,27 +345,30 @@ export default function Units() {
                           <Button type="primary" size="small" icon={<PlusOutlined />} className={styles.btnNovaTurma}>NOVA TURMA</Button>
                         </div>
 
-                        {selectedUnit.turmas && selectedUnit.turmas.length > 0 ? (
+                        {loadingTurmas ? (
+                          <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
+                            <Spin size="medium" tip="Buscando turmas reais..." />
+                          </div>
+                        ) : turmas && turmas.length > 0 ? (
                           <List
                             itemLayout="horizontal"
-                            dataSource={selectedUnit.turmas}
+                            dataSource={turmas} // MODIFICADO: Usa as turmas dinâmicas da API
                             renderItem={(turma: any) => (
                               <List.Item className={styles.turmaListItem} onClick={() => setSelectedTurma(turma)}>
                                 <List.Item.Meta
                                   avatar={<Avatar icon={<SiGoogleclassroom />} className={styles.avatarDarkBlue} />}
-                                  title={<Text className={styles.listTitleBold} style={{ color: textColor }}>{turma.nome}</Text>}
-                                  description={<span style={{ color: subTextColor }}>Turno: {turma.turno} | Alunos: {turma.dashboardTurma?.metrics.alunos || 0}</span>}
+                                  title={<Text className={styles.listTitleBold} style={{ color: textColor }}>{turma.nome || turma.name}</Text>}
+                                  description={<span style={{ color: subTextColor }}>Turno: {turma.turno || 'Não definido'} | Alunos: {turma.dashboardTurma?.metrics.alunos || 0}</span>}
                                 />
                               </List.Item>
                             )}
                           />
                         ) : (
-                          <div className={styles.emptyState} style={{ color: subTextColor }}>Nenhuma turma cadastrada.</div>
+                          <div className={styles.emptyState} style={{ color: subTextColor }}>Nenhuma turma cadastrada no banco de dados.</div>
                         )}
                       </div>
                     )}
 
-                    
                     {selectedTurma && !selectedAluno && (
                       <div className={styles.tabAnimation}>
                         <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedTurma(null)} className={styles.btnBack} style={{ color: isDarkMode ? '#60A5FA' : '#1890ff' }}>
@@ -350,7 +396,6 @@ export default function Units() {
                           </Row>
                         </div>
 
-                        
                         <Divider className={styles.dividerSpaced} style={{ borderColor }} />
                         <Text className={styles.sectionTitle} style={{ color: textColor }}>Alunos da Turma</Text>
                         
@@ -374,11 +419,10 @@ export default function Units() {
                       </div>
                     )}
 
-                    
                     {selectedAluno && (
                       <div className={styles.tabAnimation}>
                         <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => setSelectedAluno(null)} className={styles.btnBack} style={{ color: isDarkMode ? '#60A5FA' : '#1890ff' }}>
-                          Voltar para {selectedTurma.nome}
+                          Voltar para {selectedTurma.nome || selectedTurma.name}
                         </Button>
 
                         <div className={styles.statsContainer} style={{ borderColor, backgroundColor: panelBg }}>

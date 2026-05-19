@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Select, Button, Row, Col, Upload, Avatar } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Select, Button, Row, Col, Upload, Avatar, message } from 'antd';
 import {
   LeftOutlined, EditOutlined, IdcardOutlined, MailOutlined, UserOutlined,
   AppstoreOutlined, PhoneOutlined, FolderOutlined, EnvironmentOutlined,
@@ -7,15 +7,19 @@ import {
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { adminService } from '../../services/adminService';
+
 export default function CadastroCliente() {
   const navigate = useNavigate();
   const location = useLocation(); 
   const [form] = Form.useForm();
 
+  const [loading, setLoading] = useState(false);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string>('');
   
   const editData = location.state?.clientData;
 
-  
   useEffect(() => {
     if (editData) {
       form.setFieldsValue({
@@ -23,12 +27,41 @@ export default function CadastroCliente() {
         codigo: editData.codigo,
         logradouro: editData.endereco, 
       });
+      
+      if (editData.logo) {
+        setPreviewImage(editData.logo);
+      }
     }
   }, [editData, form]);
 
+  const beforeUpload = (file: File) => {
+    setLogoFile(file);
+    setPreviewImage(URL.createObjectURL(file)); 
+    return false; // Retorna false para o Ant Design não disparar a ação padrão
+  };
+
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    try {
+      if (editData && editData.id) {
+        await adminService.updateClient(editData.id, values, logoFile || undefined);
+        message.success('Cliente atualizado com sucesso!');
+      } else {
+        await adminService.createClient(values, logoFile || undefined);
+        message.success('Cliente cadastrado com sucesso!');
+      }
+      
+      navigate('/admin'); // Volta para a página Home após sucesso
+    } catch (error: any) {
+      message.error('Erro ao guardar as informações do cliente. Verifique o console.');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
-      
       
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '40px' }}>
         <Button
@@ -39,24 +72,21 @@ export default function CadastroCliente() {
           style={{ marginRight: '16px' }}
         />
         <h2 className="page-title" style={{ margin: 0, color: '#122A4C', fontSize: '20px', fontWeight: 800, letterSpacing: '0.5px' }}>
-          
           {editData ? 'EDITAR CLIENTE' : 'CADASTRAR CLIENTE'}
         </h2>
       </div>
 
-      <Form form={form} layout="vertical" requiredMark={false}>
-        
+           <Form form={form} layout="vertical" requiredMark={false} onFinish={onFinish}>
         
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '48px' }}>
-          <Upload name="logo" listType="picture-circle" showUploadList={false}>
+                   <Upload name="logo" listType="picture-circle" showUploadList={false} beforeUpload={beforeUpload}>
             <div style={{ position: 'relative', cursor: 'pointer' }}>
               
               <Avatar 
                 size={120} 
-                src={editData ? editData.logo : "https://cdn-icons-png.flaticon.com/512/1940/1940611.png"} 
+                src={previewImage || (editData ? editData.logo : "https://cdn-icons-png.flaticon.com/512/1940/1940611.png")} 
                 style={{ border: '3px solid #E2E8F0', padding: '4px', backgroundColor: '#FFF' }} 
               />
-              
               
               <div className="avatar-edit-badge">
                 <EditOutlined />
@@ -65,7 +95,6 @@ export default function CadastroCliente() {
           </Upload>
         </div>
 
-        
         <div className="form-section-card">
           <h3 className="form-section-title">DADOS BÁSICOS</h3>
           <Row gutter={24}>
@@ -111,7 +140,6 @@ export default function CadastroCliente() {
           </Row>
         </div>
 
-        
         <div className="form-section-card">
           <h3 className="form-section-title">ENDEREÇO</h3>
           <Row gutter={24}>
@@ -153,9 +181,8 @@ export default function CadastroCliente() {
           </Row>
         </div>
 
-        
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-          <Button type="primary" htmlType="submit" size="large" className="btn-salvar">
+                   <Button type="primary" htmlType="submit" size="large" className="btn-salvar" loading={loading}>
             SALVAR
           </Button>
         </div>

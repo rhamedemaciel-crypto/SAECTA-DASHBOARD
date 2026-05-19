@@ -1,18 +1,46 @@
-import React from 'react';
-import { Form, Input, Select, Button, Row, Col, Upload, Avatar } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Select, Button, Row, Col, Upload, Avatar, message } from 'antd';
 import {
   LeftOutlined, EditOutlined, MailOutlined, IdcardOutlined, 
   UserOutlined, LockOutlined, ArrowUpOutlined, BankOutlined
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
+import { adminService } from '../../services/adminService';
+
 export default function CadastroAdmin() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
+  const [loading, setLoading] = useState(false);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string>('');
+
+  const beforeUpload = (file: File) => {
+    setAvatarFile(file);
+    setPreviewImage(URL.createObjectURL(file)); 
+    return false; // Impede o envio padrão do Ant Design
+  };
+
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    try {
+      
+      await adminService.createAdmin(values, avatarFile || undefined);
+      
+      message.success('Administrador cadastrado com sucesso!');
+      navigate('/admin'); // Redireciona para a home
+      
+    } catch (error: any) {
+      message.error('Erro ao tentar cadastrar o administrador. Verifique os dados e tente novamente.');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
-      
       
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '40px' }}>
         <Button
@@ -27,15 +55,17 @@ export default function CadastroAdmin() {
         </h2>
       </div>
 
-      <Form form={form} layout="vertical" requiredMark={false}>
-        
+           <Form form={form} layout="vertical" requiredMark={false} onFinish={onFinish}>
         
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '48px' }}>
-          <Upload name="avatar" listType="picture-circle" showUploadList={false}>
+                   <Upload name="image" listType="picture-circle" showUploadList={false} beforeUpload={beforeUpload}>
             <div style={{ position: 'relative', cursor: 'pointer' }}>
               
-              <Avatar size={120} src="https://i.pravatar.cc/150?img=11" style={{ border: '3px solid #E2E8F0', padding: '2px', backgroundColor: '#FFF' }} />
-              
+              <Avatar 
+                size={120} 
+                src={previewImage || "https://i.pravatar.cc/150?img=11"} 
+                style={{ border: '3px solid #E2E8F0', padding: '2px', backgroundColor: '#FFF' }} 
+              />
               
               <div className="avatar-edit-badge">
                 <EditOutlined />
@@ -44,7 +74,6 @@ export default function CadastroAdmin() {
           </Upload>
         </div>
 
-        
         <div className="form-section-card">
           <h3 className="form-section-title">DADOS BÁSICOS</h3>
           <Row gutter={24}>
@@ -56,7 +85,7 @@ export default function CadastroAdmin() {
             </Col>
             
             <Col xs={24} md={8}>
-              <Form.Item name="codigo">
+                           <Form.Item name="codigo">
                 <Input size="large" placeholder="Código" prefix={<IdcardOutlined className="input-icon" />} className="custom-input" />
               </Form.Item>
             </Col>
@@ -96,9 +125,8 @@ export default function CadastroAdmin() {
           </Row>
         </div>
 
-        
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-          <Button type="primary" htmlType="submit" size="large" className="btn-salvar">
+                   <Button type="primary" htmlType="submit" size="large" className="btn-salvar" loading={loading}>
             SALVAR
           </Button>
         </div>

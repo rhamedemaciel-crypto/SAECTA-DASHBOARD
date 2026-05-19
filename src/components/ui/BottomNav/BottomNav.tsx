@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BankOutlined } from "@ant-design/icons";
-import { MdSpaceDashboard, MdOutlineQuiz } from "react-icons/md"; // 👇 Novo ícone de Provas importado aqui
+import { MdSpaceDashboard, MdOutlineQuiz } from "react-icons/md"; 
 import styles from "./BottomNav.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -16,27 +16,25 @@ const navItems: NavItem[] = [
     key: "inicio", 
     label: "INÍCIO", 
     icon: <MdSpaceDashboard style={{ fontSize: '20px' }} />, 
-    path: "/client" // Esse já estava certo
+    path: "/client" 
   },
   {
     key: "unidades",
     label: "UNIDADES",
     icon: <BankOutlined style={{ fontSize: '20px' }} />,
-    path: "/client/units", // 👇 Barra e caminho completo adicionados
+    path: "/client/units", 
   },
   {
     key: "provas",
     label: "PROVAS",
     icon: <MdOutlineQuiz style={{ fontSize: '20px' }} />,
-    path: "/client/gerar-prova", // 👇 Barra e caminho completo adicionados
+    path: "/client/gerar-prova", 
   },
 ];
 
 export default function BottomNav() {
   const navigate = useNavigate();
   const pathName = useLocation().pathname;
-  
-  // 👇 Lógica de botão ativo atualizada para reconhecer a rota gerar-prova
   const [active, setActive] = useState(
     pathName.includes("units") ? "unidades" : pathName.includes("gerar-prova") ? "provas" : "inicio",
   );

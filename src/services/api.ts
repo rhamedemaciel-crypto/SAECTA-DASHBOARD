@@ -1,13 +1,24 @@
 import axios from 'axios';
+import { getAuthCookie } from '../utils/cookies'; 
 
-// Aqui configuramos a base da comunicação com o backend em Python
 const api = axios.create({
-  // Substitua pela porta/URL real do seu backend quando for testar
-  baseURL: 'http://localhost:8000/api', 
-  
-  // Muito importante: isso diz ao navegador para enviar os cookies 
-  // automaticamente para o backend ler
-  withCredentials: true, 
+  baseURL: '/v1/core',
+  withCredentials: true,
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = getAuthCookie(); 
+    
+    if (token && config.headers) {
+      // Verifica se a palavra 'Bearer' já veio do cookie. Se sim, usa direto. Se não, adiciona.
+      config.headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default api;

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 import { setAuthCookie } from '../../utils/cookies';
+import { authService } from '../../services/authService';
 
 import logoSaecta from '../../assets/logo.png';
 import intro1 from '../../assets/intro.png';
@@ -17,19 +18,27 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
-    try {
-     
-      
-      setAuthCookie('token-falso-para-teste-12345');
-      message.success('Passagem livre! Entrando no painel...');
-      navigate('/admin');
-      
-      return; 
-      
+    const hideLoading = message.loading('Verificando credenciais...', 0);
 
-    } catch (erro) {
-      console.error('Erro de autenticação:', erro);
-      message.error('Erro ao tentar forçar o login.');
+    try {
+      const response = await authService.login({
+        codeAccess: values.user,      // Mapeando o 'user' do input para 'codeAccess' do DTO
+        password: values.password     // Mapeando a senha
+      });
+      
+      hideLoading(); // Esconde a mensagem de carregamento
+
+      const tokenRecebido = response?.token || response?.access_token || response;
+      
+      setAuthCookie(tokenRecebido);
+      
+      message.success('Login realizado com sucesso!');
+      navigate('/admin');
+
+    } catch (error: any) {
+      hideLoading(); // Esconde a mensagem de carregamento em caso de erro também
+      console.error('Erro de autenticação:', error);
+      message.error(error.message || 'Erro ao tentar realizar o login.');
     }
   };
 
@@ -37,12 +46,10 @@ export default function Login() {
     <div className="login-wrapper">
       <Row className="login-container" align="middle" justify="center">
 
-        
         <Col xs={0} md={12} className="login-left-col">
           <div className="login-left-content">
 
             <div className="logo-container">
-              
               <img src={logoSaecta} alt="SAECTA" className="saecta-logo" />
             </div>
 
@@ -71,7 +78,6 @@ export default function Login() {
             <div className="partners-container">
               <Text style={{ color: '#EBEBEB', marginBottom: '8px', display: 'block', fontSize: '12px' }}>Parceiros</Text>
               <div className="partners-box">
-                
                 <span style={{ color: '#FFF', fontWeight: 600 }}>Google Cloud | KXP | ABES | Cirion</span>
               </div>
             </div>
@@ -98,7 +104,6 @@ export default function Login() {
                 name="user"
                 rules={[{ required: true, message: 'Insira seu usuário!' }]}
               >
-                
                 <Input prefix={<UserOutlined />} placeholder="Digite seu usuário" className="login-input" />
               </Form.Item>
 
@@ -106,7 +111,6 @@ export default function Login() {
                 name="password"
                 rules={[{ required: true, message: 'Insira sua senha!' }]}
               >
-                
                 <Input.Password prefix={<LockOutlined />} placeholder="Digite sua senha" className="login-input" />
               </Form.Item>
 
@@ -130,7 +134,6 @@ export default function Login() {
               </Form.Item>
             </Form>
 
-            
             <div className="login-footer">
               <Space size="large">
                 <div className="footer-icon-group">

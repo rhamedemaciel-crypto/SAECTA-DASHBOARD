@@ -15,10 +15,10 @@ interface RadarProps {
 }
 
 export default function RadarChartCard({ data }: RadarProps) {
-  // 1. Mantemos sua lógica original de dados (Banco ou Mock)
+
   const chartData = data || radarChartData;
 
-  // 2. Detetive de Dark Mode para atualizar as cores em tempo real
+
   const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-theme'));
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function RadarChartCard({ data }: RadarProps) {
     return () => observer.disconnect();
   }, []);
 
-  // 3. Cores dinâmicas para o Radar
+
   const textColor = isDarkMode ? "#E2E8F0" : "#8c9bb5";
   const gridColor = isDarkMode ? "#334155" : "#e8eef5";
   const legendColor = isDarkMode ? "#E2E8F0" : "#1e3a5f";

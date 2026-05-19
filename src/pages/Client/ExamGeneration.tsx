@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Typography, Divider, Button, Row, Col, Form, Select, 
   Input, DatePicker, List, Tag, Avatar, message, Card, Space, InputNumber
@@ -11,6 +11,9 @@ import {
 import layoutStyles from "./Units.module.css"; 
 import examStyles from "./ExamGeneration.module.css"; 
 import "../../styles/forms.css";
+
+import { subjectService } from "../../services/subjectService";
+import { skillService } from "../../services/skillService";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -27,8 +30,27 @@ export default function ExamGeneration() {
   const [selectedExam, setSelectedExam] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [subjects, setSubjects] = useState<any[]>([]);
+  const [skills, setSkills] = useState<any[]>([]);
+
   const values = Form.useWatch([], form);
   const isPanelOpen = isGenerating || selectedExam;
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const subjectsData = await subjectService.getAll();
+        setSubjects(Array.isArray(subjectsData) ? subjectsData : []);
+        
+        const skillsData = await skillService.getAll();
+        setSkills(Array.isArray(skillsData) ? skillsData : []);
+      } catch (error) {
+        console.error("Erro ao carregar dados do banco:", error);
+        message.error("Falha ao carregar disciplinas e habilidades.");
+      }
+    }
+    loadData();
+  }, []);
 
   const handleClosePanel = () => {
     setIsGenerating(false);
@@ -57,7 +79,7 @@ export default function ExamGeneration() {
           quantidade: q.qtd,
           tipo: q.tipo,
           complexidade: q.nivel,
-          bncc: q.bncc || []
+          bncc: q.bncc || [] // Agora os códigos BNCC virão das habilidades reais
         }))
       }))
     };
@@ -138,7 +160,6 @@ export default function ExamGeneration() {
                           </Col>
                           <Col span={8}>
                             <Form.Item label="Data de Aplicação" name="data_aplicacao" rules={[{ required: true }]}>
-                              
                               <DatePicker 
                                 size="large" 
                                 className={examStyles.fullWidth} 
@@ -170,7 +191,6 @@ export default function ExamGeneration() {
                                     <Row gutter={16}>
                                       <Col span={10}>
                                         <Form.Item {...areaField} name={[areaField.name, 'area_tematica']} label="Grande Área" rules={[{ required: true }]}>
-                                          
                                           <Select 
                                             size="large" 
                                             placeholder="Ex: Ciências da Natureza"
@@ -186,7 +206,6 @@ export default function ExamGeneration() {
                                       
                                       <Col span={14}>
                                         <Form.Item {...areaField} name={[areaField.name, 'disciplinas_selecionadas']} label="Disciplinas desta Área" rules={[{ required: true, message: 'Selecione pelo menos uma' }]}>
-                                          
                                           <Select 
                                             mode="multiple" 
                                             size="large" 
@@ -194,13 +213,17 @@ export default function ExamGeneration() {
                                             maxTagCount="responsive"
                                             getPopupContainer={(triggerNode) => triggerNode.parentNode}
                                           >
-                                            <Option value="Portugues">Língua Portuguesa</Option>
-                                            <Option value="Matematica">Matemática</Option>
-                                            <Option value="Fisica">Física</Option>
-                                            <Option value="Quimica">Química</Option>
-                                            <Option value="Biologia">Biologia</Option>
-                                            <Option value="Historia">História</Option>
-                                            <Option value="Geografia">Geografia</Option>
+                                                                                       {subjects.map((subject: any) => (
+                                              <Option key={subject._id || subject.id} value={subject.name || subject.titulo}>
+                                                {subject.name || subject.titulo}
+                                              </Option>
+                                            ))}
+                                                                                       {subjects.length === 0 && (
+                                              <>
+                                                <Option value="Portugues">Língua Portuguesa (Exemplo)</Option>
+                                                <Option value="Matematica">Matemática (Exemplo)</Option>
+                                              </>
+                                            )}
                                           </Select>
                                         </Form.Item>
                                       </Col>
@@ -216,78 +239,93 @@ export default function ExamGeneration() {
                                         <Form.List name={[areaField.name, 'blocos_list']}>
                                           {(blocoFields, { add: addBloco, remove: removeBloco }) => (
                                             <>
-                                              {blocoFields.map((blocoField) => (
-                                                <div key={blocoField.key} className={examStyles.blockItem}>
-                                                  <Row gutter={12}>
-                                                    <Col span={3}>
-                                                      <Form.Item {...blocoField} label="Qtd" name={[blocoField.name, 'qtd']} rules={[{ required: true }]}>
-                                                        <InputNumber min={1} className={examStyles.fullWidth} size="large" />
-                                                      </Form.Item>
-                                                    </Col>
-                                                    
-                                                    <Col span={5}>
-                                                      <Form.Item {...blocoField} label="Disciplina" name={[blocoField.name, 'disciplina_questao']} rules={[{ required: true }]}>
-                                                        
-                                                        <Select 
-                                                          placeholder="Disciplina" 
-                                                          size="large"
-                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                                                        >
-                                                          {disciplinasDestaArea.map((disc: string) => (
-                                                            <Option key={disc} value={disc}>{disc}</Option>
-                                                          ))}
-                                                        </Select>
-                                                      </Form.Item>
-                                                    </Col>
-                                                    
-                                                    <Col span={5}>
-                                                      <Form.Item {...blocoField} label="Tipo" name={[blocoField.name, 'tipo']} rules={[{ required: true }]}>
-                                                        
-                                                        <Select 
-                                                          placeholder="Tipo" 
-                                                          size="large"
-                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                                                        >
-                                                          <Option value="Objetiva">Objetiva</Option>
-                                                          <Option value="Discursiva">Discursiva</Option>
-                                                        </Select>
-                                                      </Form.Item>
-                                                    </Col>
-                                                    <Col span={4}>
-                                                      <Form.Item {...blocoField} label="Nível" name={[blocoField.name, 'nivel']} rules={[{ required: true }]}>
-                                                        
-                                                        <Select 
-                                                          placeholder="Nível" 
-                                                          size="large"
-                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                                                        >
-                                                          <Option value="Facil">Fácil</Option>
-                                                          <Option value="Medio">Médio</Option>
-                                                          <Option value="Dificil">Difícil</Option>
-                                                        </Select>
-                                                      </Form.Item>
-                                                    </Col>
-                                                    <Col span={5}>
-                                                      <Form.Item {...blocoField} label="BNCC" name={[blocoField.name, 'bncc']}>
-                                                        
-                                                        <Select 
-                                                          mode="multiple" 
-                                                          placeholder="Opcional" 
-                                                          size="large" 
-                                                          maxTagCount="responsive"
-                                                          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                                                        >
-                                                          <Option value="EF09MA01">EF09MA01</Option>
-                                                          <Option value="EM13CNT101">EM13CNT101</Option>
-                                                        </Select>
-                                                      </Form.Item>
-                                                    </Col>
-                                                    <Col span={2} className={examStyles.centerCol}>
-                                                      <Button type="text" danger icon={<DeleteOutlined />} onClick={() => removeBloco(blocoField.name)} />
-                                                    </Col>
-                                                  </Row>
-                                                </div>
-                                              ))}
+                                              {blocoFields.map((blocoField) => {
+                                                const disciplinaSelecionadaNoBloco = values?.areas?.[areaField.name]?.blocos_list?.[blocoField.name]?.disciplina_questao;
+                                                
+                                                const habilidadesFiltradas = skills.filter(skill => 
+                                                  !disciplinaSelecionadaNoBloco || 
+                                                  skill.subject === disciplinaSelecionadaNoBloco || 
+                                                  skill.subjectName === disciplinaSelecionadaNoBloco
+                                                );
+
+                                                return (
+                                                  <div key={blocoField.key} className={examStyles.blockItem}>
+                                                    <Row gutter={12}>
+                                                      <Col span={3}>
+                                                        <Form.Item {...blocoField} label="Qtd" name={[blocoField.name, 'qtd']} rules={[{ required: true }]}>
+                                                          <InputNumber min={1} className={examStyles.fullWidth} size="large" />
+                                                        </Form.Item>
+                                                      </Col>
+                                                      
+                                                      <Col span={5}>
+                                                        <Form.Item {...blocoField} label="Disciplina" name={[blocoField.name, 'disciplina_questao']} rules={[{ required: true }]}>
+                                                          <Select 
+                                                            placeholder="Disciplina" 
+                                                            size="large"
+                                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                          >
+                                                            {disciplinasDestaArea.map((disc: string) => (
+                                                              <Option key={disc} value={disc}>{disc}</Option>
+                                                            ))}
+                                                          </Select>
+                                                        </Form.Item>
+                                                      </Col>
+                                                      
+                                                      <Col span={5}>
+                                                        <Form.Item {...blocoField} label="Tipo" name={[blocoField.name, 'tipo']} rules={[{ required: true }]}>
+                                                          <Select 
+                                                            placeholder="Tipo" 
+                                                            size="large"
+                                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                          >
+                                                            <Option value="Objetiva">Objetiva</Option>
+                                                            <Option value="Discursiva">Discursiva</Option>
+                                                          </Select>
+                                                        </Form.Item>
+                                                      </Col>
+                                                      <Col span={4}>
+                                                        <Form.Item {...blocoField} label="Nível" name={[blocoField.name, 'nivel']} rules={[{ required: true }]}>
+                                                          <Select 
+                                                            placeholder="Nível" 
+                                                            size="large"
+                                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                          >
+                                                            <Option value="Facil">Fácil</Option>
+                                                            <Option value="Medio">Médio</Option>
+                                                            <Option value="Dificil">Difícil</Option>
+                                                          </Select>
+                                                        </Form.Item>
+                                                      </Col>
+                                                      <Col span={5}>
+                                                        <Form.Item {...blocoField} label="BNCC" name={[blocoField.name, 'bncc']}>
+                                                          <Select 
+                                                            mode="multiple" 
+                                                            placeholder="Opcional" 
+                                                            size="large" 
+                                                            maxTagCount="responsive"
+                                                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                                          >
+                                                                                                                       {habilidadesFiltradas.map((skill: any) => (
+                                                              <Option key={skill._id || skill.id} value={skill.code || skill.codigoBNCC}>
+                                                                {skill.code || skill.codigoBNCC}
+                                                              </Option>
+                                                            ))}
+                                                                                                                       {skills.length === 0 && (
+                                                              <>
+                                                                <Option value="EF09MA01">EF09MA01 (Exemplo)</Option>
+                                                                <Option value="EM13CNT101">EM13CNT101 (Exemplo)</Option>
+                                                              </>
+                                                            )}
+                                                          </Select>
+                                                        </Form.Item>
+                                                      </Col>
+                                                      <Col span={2} className={examStyles.centerCol}>
+                                                        <Button type="text" danger icon={<DeleteOutlined />} onClick={() => removeBloco(blocoField.name)} />
+                                                      </Col>
+                                                    </Row>
+                                                  </div>
+                                                );
+                                              })}
                                               <Button type="dashed" onClick={() => addBloco()} icon={<PlusOutlined />} className={examStyles.btnAddBlock}>
                                                 Adicionar Bloco de Questões
                                               </Button>
@@ -322,7 +360,6 @@ export default function ExamGeneration() {
                     </Form>
                   </div>
                 ) : (
-                  /* VISUALIZAÇÃO ORIGINAL MANTIDA */
                   <div className={layoutStyles.tabAnimation}>
                      <div className={layoutStyles.unitHeaderBlock}>
                         <Avatar size={64} className={examStyles.avatarLarge} icon={<FileTextOutlined />} />
